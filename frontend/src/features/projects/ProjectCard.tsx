@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ShowMore } from "@re-dev/react-truncate";
+import { getLocaleUrl } from "astro-i18n-aut";
 import { detectBackdropTone } from "@lib/image-tone";
 import "./ProjectCard.css";
 
@@ -29,8 +30,7 @@ export default function ProjectCard({
   const cardRef = useRef<HTMLElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [mediaTone, setMediaTone] = useState<"light" | "dark" | null>(null);
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-  const href = `${base}/${locale}/projects/${projectId}/`;
+  const href = getLocaleUrl(`/projects/${projectId}/`, locale);
   const num = String(index + 1).padStart(2, "0");
 
   useEffect(() => {
