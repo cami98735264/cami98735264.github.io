@@ -77,6 +77,7 @@ export const translationsSchema = z.object({
   sections: z.object({
     aboutMe: z.object({
       containerId: z.string(),
+      eyebrow: z.string(),
       title: z.string(),
       whatsappText: z.string(),
       emailTextBody: z.string(),
@@ -90,6 +91,7 @@ export const translationsSchema = z.object({
     }),
     contactMe: z.object({
       containerId: z.string(),
+      eyebrow: z.string(),
       title: z.string(),
       description: z.string(),
       form: z.object({
@@ -105,6 +107,7 @@ export const translationsSchema = z.object({
     }),
     projects: z.object({
       containerId: z.string(),
+      eyebrow: z.string(),
       title: z.string(),
       description: z.string(),
       viewGithub: z.string(),
@@ -118,6 +121,7 @@ export const translationsSchema = z.object({
     }),
     technologies: z.object({
       containerId: z.string(),
+      eyebrow: z.string(),
       title: z.string(),
       description: z.string(),
       categories: z.object({
@@ -136,6 +140,7 @@ export const translationsSchema = z.object({
     }),
     experience: z.object({
       containerId: z.string(),
+      eyebrow: z.string(),
       title: z.string(),
       description: z.string(),
       currentLabel: z.string().default("Present"),
@@ -143,6 +148,7 @@ export const translationsSchema = z.object({
     }),
     education: z.object({
       containerId: z.string().default("Education"),
+      eyebrow: z.string().default("05 / Formation"),
       title: z.string().default("Education"),
       description: z
         .string()
@@ -152,6 +158,7 @@ export const translationsSchema = z.object({
     }),
     languages: z.object({
       containerId: z.string().default("Languages"),
+      eyebrow: z.string().default("06 / Tongues"),
       title: z.string().default("Languages"),
       description: z
         .string()

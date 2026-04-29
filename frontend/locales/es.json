@@ -28,6 +28,7 @@
   "sections": {
     "aboutMe": {
       "containerId": "Sobre mí",
+      "eyebrow": "01 / Introducción",
       "title": "Sobre mí",
       "whatsappText": "Hola! Me gustaría saber más sobre tus servicios! 🚀",
       "emailTextBody": "Hola! Me gustaría saber más sobre tus servicios! 🚀",
@@ -41,6 +42,7 @@
     },
     "contactMe": {
       "containerId": "Contáctame",
+      "eyebrow": "05 / Contacto",
       "title": "Contáctame",
       "description": "Si deseas contactarme para colaborar en un proyecto o simplemente saludar, no dudes en enviarme un mensaje a través de mi correo electrónico o mis redes sociales.",
       "form": {
@@ -55,6 +57,7 @@
       }
     },
     "projects": {
+      "eyebrow": "02 / Trabajos destacados",
       "viewProject": "Ver proyecto",
       "viewGithub": "Ver en GitHub",
       "viewOnline": "Ver en línea",
@@ -660,6 +663,7 @@
     },
     "technologies": {
       "containerId": "Tecnologías",
+      "eyebrow": "03 / Stack",
       "count": {
         "description": "hasta la fecha"
       },
@@ -679,6 +683,7 @@
       "description": "En esta sección, se recopilarán las tecnologías que he utillizado en mi trayectoría y de las cuales tengo un grado de proficiencia para cada una de ellas."
     },
     "experience": {
+      "eyebrow": "04 / Trayectoria",
       "experienceList": [
         {
           "company": "Swapps",
@@ -850,6 +855,7 @@
     },
     "education": {
       "containerId": "Educación",
+      "eyebrow": "05 / Formación",
       "title": "Educación",
       "description": "Formación académica que respalda el camino autodidacta que empecé años antes.",
       "coursesLabel": "Asignaturas",
@@ -871,6 +877,7 @@
     },
     "languages": {
       "containerId": "Idiomas",
+      "eyebrow": "06 / Idiomas",
       "title": "Idiomas",
       "description": "Idiomas en los que trabajo, entrego y me comunico día a día.",
       "list": [
