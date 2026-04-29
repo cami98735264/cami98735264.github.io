@@ -2,7 +2,7 @@
 import { getLocale } from "astro-i18n-aut";
 import { loadTranslations } from "@i18n/index";
 import { navbarLinks } from "@config/site";
-import { isLandingPage } from "@lib/urls";
+import { isLandingPage, withBase } from "@lib/urls";
 import { toSlug } from "@lib/strings";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 
@@ -12,12 +12,12 @@ const onLanding = isLandingPage(Astro.url);
 
 function anchorFor(key: (typeof navbarLinks)[number]): string {
   const slug = toSlug(translations.navbar[key]);
-  return onLanding ? `#${slug}` : `/${locale}/#${slug}`;
+  return onLanding ? `#${slug}` : withBase(`/${locale}/#${slug}`);
 }
 ---
 
 <header class="nav" role="banner">
-  <a href={`/${locale}/`} class="nav__brand" aria-label="Homepage">
+  <a href={withBase(`/${locale}/`)} class="nav__brand" aria-label="Homepage">
     <span class="nav__brand-mark" aria-hidden="true">○</span>
     <span class="nav__brand-name">Cristián R.</span>
     <span class="nav__brand-role eyebrow">F. S. Developer</span>

@@ -32,7 +32,8 @@ export default defineConfig({
       filter: filterSitemapByDefaultLocale({ defaultLocale }),
     }),
   ],
-  site: "https://crodriguez.com.co",
+  site: "https://cami98735264.github.io",
+  base: "/portfolio-v3",
   trailingSlash: "always",
   build: {
     format: "directory",

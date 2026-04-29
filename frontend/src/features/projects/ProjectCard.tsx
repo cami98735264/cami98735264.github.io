@@ -29,7 +29,8 @@ export default function ProjectCard({
   const cardRef = useRef<HTMLElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [mediaTone, setMediaTone] = useState<"light" | "dark" | null>(null);
-  const href = `/${locale}/projects/${projectId}/`;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const href = `${base}/${locale}/projects/${projectId}/`;
   const num = String(index + 1).padStart(2, "0");
 
   useEffect(() => {
