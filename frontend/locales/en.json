@@ -666,6 +666,7 @@
     },
     "technologies": {
       "containerId": "Technologies",
+      "eyebrow": "03 / Stack",
       "count": {
         "description": "to date"
       },
