@@ -33,7 +33,6 @@ export default defineConfig({
     }),
   ],
   site: "https://cami98735264.github.io",
-  base: "/portfolio-v3",
   trailingSlash: "always",
   build: {
     format: "directory",
