@@ -1,8 +1,8 @@
 ---
-import { getLocale } from "astro-i18n-aut";
+import { getLocale, getLocaleUrl } from "astro-i18n-aut";
 import { loadTranslations } from "@i18n/index";
 import { footerLinks, social, author } from "@config/site";
-import { isLandingPage, withBase } from "@lib/urls";
+import { isLandingPage } from "@lib/urls";
 import { toSlug } from "@lib/strings";
 
 const locale = getLocale(Astro.url);
@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
 
 function anchorFor(key: (typeof footerLinks)[number]): string {
   const slug = toSlug(translations.footer[key]);
-  return onLanding ? `#${slug}` : withBase(`/${locale}/#${slug}`);
+  return onLanding ? `#${slug}` : getLocaleUrl(`/#${slug}`, locale);
 }
 
 const socialLinks = [
