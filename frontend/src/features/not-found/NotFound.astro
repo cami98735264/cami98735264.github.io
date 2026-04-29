@@ -1,0 +1,84 @@
+---
+import { getLocale, getLocaleUrl } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const homeUrl = getLocaleUrl("/", locale);
+---
+
+<section class="nf" aria-labelledby="nf-title">
+  <span class="eyebrow nf__num" aria-hidden="true">404</span>
+  <h1 id="nf-title" class="nf__title display">{t["404"].title}</h1>
+  <p class="nf__desc">{t["404"].description}</p>
+  <a href={homeUrl} class="nf__link">
+    <span aria-hidden="true">←</span>
+    <span>{t["404"].backToHome}</span>
+  </a>
+</section>
+
+<style>
+  .nf {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+    display: grid;
+    gap: var(--space-md);
+    text-align: center;
+    place-items: center;
+    min-height: 60dvh;
+    place-content: center;
+  }
+
+  .nf__num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-accent);
+  }
+
+  .nf__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+    text-wrap: balance;
+  }
+
+  .nf__desc {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 56ch;
+  }
+
+  .nf__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+    padding-block: var(--space-2xs);
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-paper);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      gap var(--dur-fast) var(--ease-out);
+  }
+
+  .nf__link:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    gap: var(--space-sm);
+  }
+</style>

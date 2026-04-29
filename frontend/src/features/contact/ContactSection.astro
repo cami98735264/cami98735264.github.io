@@ -1,0 +1,83 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+import ContactForm from "./ContactForm.tsx";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const id = toSlug(t.sections.contactMe.containerId);
+---
+
+<section id={id} class="ct" aria-labelledby="ct-title">
+  <header class="ct__header">
+    <span class="eyebrow reveal" data-motion="fade">05 / Contact</span>
+    <h2 id="ct-title" class="ct__title display reveal">
+      {t.sections.contactMe.title}
+    </h2>
+    <p class="ct__intro reveal" style="--reveal-delay: 120ms">
+      {t.sections.contactMe.description}
+    </p>
+  </header>
+
+  <div class="ct__form reveal" style="--reveal-delay: 200ms">
+    <ContactForm
+      client:visible
+      labels={t.sections.contactMe.form}
+    />
+  </div>
+</section>
+
+<style>
+  .ct {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .ct__header {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .ct__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .ct__intro {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 60ch;
+  }
+
+  @media (min-width: 900px) {
+    .ct__header {
+      grid-template-columns: repeat(12, 1fr);
+      align-items: end;
+      gap: var(--space-md);
+      margin-bottom: var(--space-4xl);
+    }
+    .ct__header .eyebrow {
+      grid-column: 1 / span 12;
+    }
+    .ct__title {
+      grid-column: 1 / span 8;
+    }
+    .ct__intro {
+      grid-column: 1 / span 6;
+    }
+    .ct__form {
+      grid-column: 1 / span 8;
+    }
+  }
+</style>

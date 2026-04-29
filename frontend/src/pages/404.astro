@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Navbar from "@layout/Navbar.astro";
+import Footer from "@layout/Footer.astro";
+import NotFound from "@features/not-found/NotFound.astro";
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+---
+
+<BaseLayout title={`${t["404"].title} — Cristián Rodríguez`} description={t["404"].description}>
+  <Navbar />
+  <main>
+    <NotFound />
+  </main>
+  <Footer />
+</BaseLayout>

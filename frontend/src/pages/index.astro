@@ -1,61 +1,26 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.astro";
-import {navbarElements, footerElements } from "../utils/linkElements";
-import AboutMe from "../components/sections/AboutMe.astro";
-import Projects from '../components/sections/Projects.astro';
-import Tecnologies from '../components/sections/Tecnologies.astro';
-import Footer from "../components/Footer.astro";
-import WorkExperience from '../components/sections/WorkExperience.astro';
-import { getLocale } from "astro-i18n-aut";
-import ContactMe from "../components/sections/ContactMe.astro";
-
-const locale = getLocale(Astro.url);
-
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Navbar from "@layout/Navbar.astro";
+import Footer from "@layout/Footer.astro";
+import Hero from "@features/hero/Hero.astro";
+import ProjectsSection from "@features/projects/ProjectsSection.astro";
+import TechnologiesSection from "@features/technologies/TechnologiesSection.astro";
+import ExperienceSection from "@features/experience/ExperienceSection.astro";
+import EducationSection from "@features/education/EducationSection.astro";
+import LanguagesSection from "@features/languages/LanguagesSection.astro";
+import ContactSection from "@features/contact/ContactSection.astro";
 ---
 
-<Layout>
-	<Navbar navbarElements={navbarElements} />
-	<div class="sections">
-		<AboutMe/>
-		<Projects/>
-		<Tecnologies/>
-		<WorkExperience/>
-		<ContactMe/>
-	</div>
-	<Footer footerElements={footerElements}/>
-</Layout>
-
-
-<style is:global>
-	.sections {
-		display: flex;
-		flex-direction: column;
-		gap: 56px;
-	}
-	.hero {
-		padding: 72px;
-		align-items: center;
-		width: 100%;
-		height: 600px;
-		justify-content: space-between;
-		display: flex;
-	}
-
-	.hero__content {
-		flex: 0.5;
-	}
-	.hero__image img {
-		border: 3px solid var(--primary);
-		display: block;
-		height: 100%;
-		margin: 0 auto;
-		border-radius: 12px;
-	}
-	.hero__image {
-		height: 400px;
-		display: block;
-		flex: 0.5;
-	}
-	
-</style>
+<BaseLayout>
+  <Navbar />
+  <main>
+    <Hero />
+    <ProjectsSection />
+    <TechnologiesSection />
+    <ExperienceSection />
+    <EducationSection />
+    <LanguagesSection />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

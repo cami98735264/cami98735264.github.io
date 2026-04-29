@@ -1,0 +1,42 @@
+---
+/**
+ * Fixed-position grain overlay. Pure SVG noise — no asset loaded,
+ * no layout impact. Sits above content but ignores pointer events.
+ */
+interface Props {
+  opacity?: number;
+}
+const { opacity = 0.06 } = Astro.props;
+---
+
+<div class="grain" aria-hidden="true" style={`--grain-opacity: ${opacity}`}>
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <filter id="grain-noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix type="saturate" values="0"></feColorMatrix>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain-noise)"></rect>
+  </svg>
+</div>
+
+<style>
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-grain);
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: overlay;
+  }
+  .grain svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grain {
+      opacity: calc(var(--grain-opacity) * 0.5);
+    }
+  }
+</style>

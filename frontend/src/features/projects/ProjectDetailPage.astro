@@ -1,0 +1,34 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import ProjectDetailHeader from "./ProjectDetailHeader.astro";
+import ProjectDetailBody from "./ProjectDetailBody.astro";
+import NotFound from "@features/not-found/NotFound.astro";
+import type { Project } from "./project.types";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const { projectId } = Astro.params;
+
+const project = t.sections.projects.list.find(
+  (p: Project) => String(p.id) === String(projectId),
+);
+---
+
+{project ? (
+  <>
+    <ProjectDetailHeader
+      project={{
+        ...project,
+        viewGithub: t.sections.projects.viewGithub,
+        viewOnline: t.sections.projects.viewOnline,
+      }}
+    />
+    <ProjectDetailBody
+      project={project}
+      highlightTitle={t.sections.projects.projectsNotes}
+    />
+  </>
+) : (
+  <NotFound />
+)}

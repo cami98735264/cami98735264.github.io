@@ -1,0 +1,181 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { footerLinks, social, author } from "@config/site";
+import { isLandingPage } from "@lib/urls";
+import { toSlug } from "@lib/strings";
+
+const locale = getLocale(Astro.url);
+const translations = await loadTranslations(locale);
+const onLanding = isLandingPage(Astro.url);
+const year = new Date().getFullYear();
+
+function anchorFor(key: (typeof footerLinks)[number]): string {
+  const slug = toSlug(translations.footer[key]);
+  return onLanding ? `#${slug}` : `/${locale}/#${slug}`;
+}
+
+const socialLinks = [
+  { href: social.github, label: "GitHub" },
+  { href: social.linkedin, label: "LinkedIn" },
+  { href: social.whatsapp, label: "WhatsApp" },
+  { href: social.email, label: "Email" },
+];
+---
+
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <span class="footer__mark display" aria-hidden="true">○</span>
+      <span class="footer__name display">{author.name}</span>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      {footerLinks.map((key) => (
+        <a class="footer__link" href={anchorFor(key)}>
+          {translations.footer[key].split("-").join(" ")}
+        </a>
+      ))}
+    </nav>
+
+    <ul class="footer__social" role="list">
+      {socialLinks.map(({ href, label }) => (
+        <li>
+          <a href={href} target="_blank" rel="noopener noreferrer" class="footer__social-link">
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="footer__legal">
+      <span class="eyebrow">© {year}</span>
+      <span class="eyebrow">All rights reserved</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-3xl) var(--space-lg);
+    border-top: 1px solid var(--color-ink-rule);
+    margin-top: var(--space-4xl);
+  }
+
+  .footer__inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .footer__brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    min-width: 0;
+  }
+
+  .footer__mark {
+    color: var(--color-accent);
+    font-size: var(--fs-h2);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .footer__name {
+    font-style: italic;
+    font-size: var(--fs-h3);
+    color: var(--color-paper);
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+  }
+
+  .footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-lg);
+  }
+
+  .footer__link {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-small);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .footer__link:hover {
+    color: var(--color-accent);
+  }
+
+  .footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer__social-link {
+    color: var(--color-paper-mute);
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .footer__social-link:hover {
+    color: var(--color-paper);
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: var(--space-md);
+    color: var(--color-paper-mute);
+  }
+
+  @media (min-width: 900px) {
+    .footer__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
+      column-gap: var(--space-2xl);
+      row-gap: var(--space-xl);
+      align-items: baseline;
+    }
+    .footer__brand {
+      grid-row: 1;
+      grid-column: 1;
+    }
+    .footer__social {
+      grid-row: 1;
+      grid-column: 2;
+      justify-content: flex-end;
+      align-self: center;
+    }
+    .footer__nav {
+      grid-row: 2;
+      grid-column: 1;
+      align-self: end;
+    }
+    .footer__legal {
+      grid-row: 2;
+      grid-column: 2;
+      justify-content: flex-end;
+      align-self: end;
+    }
+    .footer__inner::before {
+      content: "";
+      grid-row: 2;
+      grid-column: 1 / -1;
+      height: 1px;
+      background: var(--color-ink-rule);
+      align-self: start;
+      margin-bottom: var(--space-md);
+    }
+  }
+</style>

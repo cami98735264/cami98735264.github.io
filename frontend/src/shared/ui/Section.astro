@@ -1,0 +1,69 @@
+---
+interface Props {
+  id: string;
+  width?: "narrow" | "wide" | "full";
+  fullViewport?: boolean;
+  class?: string;
+}
+
+const { id, width = "wide", fullViewport = false, class: className = "" } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={["section", `section--${width}`, fullViewport && "section--vh", className]}
+>
+  <div class="section__inner">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    width: 100%;
+    margin-inline: auto;
+    padding-block: var(--space-4xl);
+  }
+
+  .section:first-child {
+    padding-block-start: var(--space-3xl);
+  }
+
+  .section--narrow {
+    max-width: var(--container-narrow);
+  }
+
+  .section--wide {
+    max-width: var(--container-wide);
+  }
+
+  .section--full {
+    max-width: var(--container-full);
+  }
+
+  .section--vh {
+    min-height: calc(100dvh - var(--space-5xl));
+    display: flex;
+    align-items: center;
+  }
+
+  .section__inner {
+    width: 100%;
+  }
+
+  @media (min-width: 900px) {
+    .section {
+      padding-block: var(--space-5xl);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .section {
+      padding-block: var(--space-3xl);
+    }
+    .section--vh {
+      min-height: auto;
+      padding-block: var(--space-4xl);
+    }
+  }
+</style>

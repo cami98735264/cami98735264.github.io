@@ -1,0 +1,190 @@
+---
+import { Icon } from "astro-icon/components";
+import type { RenderMode, TechItem } from "./tech.config";
+
+interface Props {
+  title: string;
+  technologies: readonly TechItem[];
+  mode?: RenderMode;
+  localeIcon?: boolean;
+}
+
+const { title, technologies, mode = "icon", localeIcon = false } = Astro.props;
+
+/* Devicon brand marks that ship as black/very-dark glyphs and lose
+   contrast on the dark badge. Listed here so the tone fix is data-driven
+   and easy to extend without touching CSS. */
+const DARK_ON_DARK = new Set(["express", "astro", "nextjs"]);
+
+interface Resolved {
+  label: string;
+  icon: string | null;
+  /** Brand hex (#RRGGBB) applied directly to the icon. When set, the icon
+   *  uses its real brand color and bypasses the tonal/white treatment. */
+  brandColor: string | null;
+  /** True when the icon is a monochrome glyph that should inherit the chip's
+   *  paper-soft color (local SVGs, simple-icons without a brandColor). */
+  tonal: boolean;
+  /** True when the icon ships as black-on-dark and needs the lift filter. */
+  lift: boolean;
+}
+
+function resolve(t: TechItem): Resolved {
+  // Object form — caller supplied explicit name and (optional) iconify ID.
+  if (typeof t !== "string") {
+    const isSimpleIcon = !!t.icon && t.icon.startsWith("simple-icons:");
+    return {
+      label: t.name,
+      icon: t.icon ?? null,
+      brandColor: t.color ?? null,
+      // simple-icons render with currentColor; only fall back to tonal/white
+      // when no brand color was supplied.
+      tonal: isSimpleIcon && !t.color,
+      lift: false,
+    };
+  }
+
+  // String form (legacy icon-mode entries).
+  if (mode === "text") {
+    return { label: t, icon: null, brandColor: null, tonal: false, lift: false };
+  }
+  if (localeIcon) {
+    return { label: t, icon: t, brandColor: null, tonal: true, lift: false };
+  }
+  return {
+    label: t.toUpperCase(),
+    icon: `devicon:${t}`,
+    brandColor: null,
+    tonal: false,
+    lift: DARK_ON_DARK.has(t.toLowerCase()),
+  };
+}
+---
+
+<div class="tg">
+  <h3 class="tg__title eyebrow">{title}</h3>
+  <ul class="tg__list" role="list">
+    {technologies.map((t) => {
+      const item = resolve(t);
+      const noIcon = item.icon === null;
+      return (
+        <li
+          class:list={[
+            "tg__item",
+            noIcon && "tg__item--text",
+            item.tonal && "tg__item--tonal",
+            item.lift && "tg__item--lift",
+          ]}
+        >
+          {item.icon && (
+            item.brandColor ? (
+              <span class="tg__icon" style={`color: ${item.brandColor};`}>
+                <Icon name={item.icon} size={28} />
+              </span>
+            ) : (
+              <Icon name={item.icon} size={28} />
+            )
+          )}
+          <span class="tg__name">{item.label}</span>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+<style>
+  .tg {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-top: 1px solid var(--color-ink-rule);
+  }
+
+  .tg__title {
+    color: var(--color-paper-mute);
+  }
+
+  .tg__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tg__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-ink-soft);
+    border: 1px solid var(--color-ink-rule);
+    border-radius: var(--radius-pill);
+    transition: border-color var(--dur-fast) var(--ease-out);
+    min-width: 0;
+  }
+
+  /* Text-only chips have no icon — keep them visually parallel to the
+     icon variant by giving them the same padding. */
+  .tg__item--text {
+    padding-inline: var(--space-md);
+  }
+
+  /* Lock the icon's intrinsic size — without this, flex would shrink it
+     to fit the label when the badge cell is narrow. */
+  .tg__item :global(svg) {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Brand-colored icons live inside a span that scopes the color to the
+     glyph only, so the label keeps its paper-soft tone. */
+  .tg__icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+  }
+
+  .tg__name {
+    white-space: nowrap;
+  }
+
+  .tg__item:hover {
+    border-color: var(--color-paper-soft);
+  }
+
+  /* Monochrome icon sets (local SVGs, simple-icons) ship single-color
+     glyphs that use currentColor. Set the inherited color on the chip
+     so they read tonally. */
+  .tg__item--tonal {
+    color: var(--color-paper-soft);
+  }
+  .tg__item--tonal:hover {
+    color: var(--color-paper);
+  }
+  .tg__item--tonal :global(svg) {
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  /* Devicon marks that are inherently black/dark (Express, Astro,
+     Next.js). Force them tonal-light so they read on the dark badge.
+     `brightness(0) invert(1)` collapses any color → pure white. */
+  .tg__item--lift :global(svg) {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+  .tg__item--lift:hover :global(svg) {
+    opacity: 1;
+  }
+
+  .tg__name {
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-paper-soft);
+  }
+</style>

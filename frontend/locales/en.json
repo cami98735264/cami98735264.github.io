@@ -3,12 +3,16 @@
     "projects": "Projects",
     "technologies": "Technologies",
     "experience": "Experience",
+    "education": "Education",
+    "languages": "Languages",
     "contact": "Contact-me"
   },
   "navbar": {
     "projects": "Projects",
     "technologies": "Technologies",
     "experience": "Experience",
+    "education": "Education",
+    "languages": "Languages",
     "languageInput": {
       "options": {
         "en": "English",
@@ -28,8 +32,9 @@
       "whatsappText": "Hi! I'd like to talk about your services! 🚀",
       "emailTextBody": "Hi! I'd like to talk about your services or set up a meeting! 🚀",
       "emailTextSubject": "Hey Cristián! 🚀",
-      "description": "I'm a Full Stack developer specialized in backend and with extensive knowledge in JavaScript, ReactJS and ExpressJS. I stand out in advanced programming, database management and user experience design (UI/UX).",
+      "description": "Full Stack Developer with 2 years shipping production TypeScript/React/Next.js + Node.js platforms end-to-end, with Python/Django services and Laravel admin tooling. I specialize in third-party integrations, multi-LLM workflows, and CI-driven testing systems, with a strong focus on production reliability, observability, and scalable architecture.",
       "descriptionTitle": "I'm Cristián, Full Stack Developer",
+      "locationLabel": "Colombia · Remote · GMT-5",
       "contactMe": "Contact me",
       "downloadCV": "Download CV",
       "downloadCVUrl": "https://github.com/cami98735264/cami98735264/raw/refs/heads/main/CRISTIAN%20CAMILO%20RODRIGUEZ%20FULL%20STACK%20CV%20ENGLISH.pdf"
@@ -42,14 +47,20 @@
         "name": "Subject",
         "email": "Email",
         "message": "Message",
-        "send": "Send"
+        "send": "Send message",
+        "errors": {
+          "required": "Required",
+          "invalidEmail": "Invalid email"
+        }
       }
     },
     "projects": {
       "viewGithub": "View on GitHub",
       "viewOnline": "View online",
-      "projectsNotes": "Projects notes and characteristics",
+      "projectsNotes": "Project highlights",
       "viewProject": "View project",
+      "showMore": "Read more",
+      "showLess": "Read less",
       "list": [
         {
           "id": 1,
@@ -659,7 +670,12 @@
         "backend": "Backend development",
         "databases": "Databases",
         "designTools": "Design tools",
-        "deployment": "Deployment"
+        "deployment": "Deployment",
+        "aiMl": "AI / ML",
+        "integrations": "Integrations",
+        "testing": "Testing & QA",
+        "observability": "Observability",
+        "architecture": "Architecture & Process"
       },
       "title": "List of technologies",
       "description": "In this section, the technologies that I have used in my career and of which I have a degree of proficiency for each of them will be compiled."
@@ -667,13 +683,47 @@
     "experience": {
       "containerId": "Experience",
       "title": "Work experience",
-      "description": "With a trajectory of +1 year of experience, I have designed information systems in different business areas, certifying my knowledge in the creation and deployment of full stack applications.",
+      "description": "Over 2 years shipping production platforms end-to-end across TypeScript/React/Next.js, Node.js, Python/Django and Laravel — with a focus on third-party integrations, multi-LLM workflows and CI-driven testing.",
+      "currentLabel": "Present",
       "experienceList": [
+        {
+          "company": "Swapps",
+          "position": "Full Stack Developer",
+          "location": "Colombia · Remote",
+          "current": true,
+          "startDate": "June 2025",
+          "endDate": "Present",
+          "description": "Greenfield platform delivery and platform reliability work for client products — covering React/Next.js + Node.js, Python/Django, Laravel admin tooling, AI-driven workflows and CI-grade testing infrastructure.",
+          "tasksList": [
+            "Shipped 4+ greenfield client platforms end-to-end in TypeScript / React / Next.js and Node.js.",
+            "Re-implemented the Dejusticia donation landing and resolved critical payment regressions in production.",
+            "Optimized Cloudflare Workers chat reliability — reducing lookup time from >10s down to ~0.5ms via Cloudflare KV.",
+            "Built CI/CD pipeline with Cypress + Percy, Argo CD preview environments and GitHub Actions checks.",
+            "Developed AI-driven n8n workflows integrating Front for automatic ticket classification and routing.",
+            "Built Agno multi-agent systems including a PM agent and a Prompt Builder agent.",
+            "Created Laravel admin tooling and handled SEO-safe site migrations."
+          ],
+          "technologiesList": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "React", "backgroundColor": "#61DAFB", "textColor": "#000000" },
+            { "name": "Next.js", "backgroundColor": "#000000", "textColor": "#FFFFFF" },
+            { "name": "Node.js", "backgroundColor": "#68A063", "textColor": "#FFFFFF" },
+            { "name": "Django", "backgroundColor": "#0C4B33", "textColor": "#FFFFFF" },
+            { "name": "Laravel", "backgroundColor": "#FF2D20", "textColor": "#FFFFFF" },
+            { "name": "Cloudflare Workers", "backgroundColor": "#F38020", "textColor": "#FFFFFF" },
+            { "name": "Cypress", "backgroundColor": "#17202C", "textColor": "#FFFFFF" },
+            { "name": "Percy", "backgroundColor": "#9E66BF", "textColor": "#FFFFFF" },
+            { "name": "Argo CD", "backgroundColor": "#EF7B4D", "textColor": "#FFFFFF" },
+            { "name": "n8n", "backgroundColor": "#EA4B71", "textColor": "#FFFFFF" },
+            { "name": "Agno", "backgroundColor": "#1F2937", "textColor": "#FFFFFF" }
+          ]
+        },
         {
           "company": "PayBluem",
           "position": "Full Stack Developer",
-          "startDate": "Mayo 2024",
-          "endDate": "Diciembre 2024",
+          "location": "Espinal, Tolima · Colombia",
+          "startDate": "May 2024",
+          "endDate": "September 2024",
           "description": "A sports platform developed in ReactJS and ExpressJS, offering a comprehensive solution for sports tournaments.",
           "tasksList": [
             "Development of a full-stack platform with role management, routing, and authentication in ReactJS and ExpressJS.",
@@ -712,6 +762,7 @@
         {
           "company": "PayBluem",
           "position": "Full Stack Developer",
+          "location": "Espinal, Tolima · Colombia",
           "startDate": "January 2024",
           "endDate": "April 2024",
           "description": "Platform and software for vehicle license plate recognition using artificial intelligence.",
@@ -760,6 +811,7 @@
         {
           "company": "PayBluem",
           "position": "Full Stack Developer",
+          "location": "Espinal, Tolima · Colombia",
           "startDate": "July 2023",
           "endDate": "December 2023",
           "description": "Platform for Colombian Sign Language interpretation using artificial intelligence with GPT-4 and the OpenAI API.",
@@ -796,6 +848,44 @@
               "textColor": "#FFFFFF"
             }
           ]
+        }
+      ]
+    },
+    "education": {
+      "containerId": "Education",
+      "title": "Education",
+      "description": "Formal training that backs the self-taught path I started years before.",
+      "coursesLabel": "Coursework",
+      "list": [
+        {
+          "institution": "Instituto Tolimense de Formación Técnica Profesional (ITFIP)",
+          "area": "Web Programming",
+          "studyType": "Technician",
+          "startDate": "January 2024",
+          "endDate": "January 2025",
+          "courses": [
+            "Full-stack web development",
+            "Databases (SQL / NoSQL)",
+            "Software engineering fundamentals",
+            "Version control"
+          ]
+        }
+      ]
+    },
+    "languages": {
+      "containerId": "Languages",
+      "title": "Languages",
+      "description": "Languages I work, ship and communicate in day-to-day.",
+      "list": [
+        {
+          "language": "Spanish",
+          "fluency": "Native",
+          "level": "C2"
+        },
+        {
+          "language": "English",
+          "fluency": "Upper Intermediate",
+          "level": "B2"
         }
       ]
     }

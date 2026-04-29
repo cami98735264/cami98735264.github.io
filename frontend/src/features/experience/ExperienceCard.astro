@@ -1,0 +1,198 @@
+---
+import TechBadge from "@features/technologies/TechBadge.astro";
+import type { Experience } from "@i18n/index";
+
+interface Props {
+  experience: Experience;
+  index: number;
+  currentLabel?: string;
+}
+
+const { experience, index, currentLabel } = Astro.props;
+const num = String(index + 1).padStart(2, "0");
+---
+
+<article class="exp reveal">
+  <div class="exp__num eyebrow" aria-hidden="true">{num}</div>
+
+  <header class="exp__head">
+    <h3 class="exp__title">
+      <span class="exp__company display">{experience.company}</span>
+      <span class="exp__sep" aria-hidden="true">/</span>
+      <span class="exp__role">{experience.position}</span>
+      {experience.current && currentLabel && (
+        <span class="exp__badge eyebrow">{currentLabel}</span>
+      )}
+    </h3>
+    <p class="exp__dates eyebrow">
+      <time>{experience.startDate}</time>
+      <span aria-hidden="true">→</span>
+      <time>{experience.endDate}</time>
+      {experience.location && (
+        <>
+          <span class="exp__dot" aria-hidden="true">·</span>
+          <span class="exp__location">{experience.location}</span>
+        </>
+      )}
+    </p>
+  </header>
+
+  <ul class="exp__tech" role="list">
+    {experience.technologiesList.map((tech) => (
+      <li>
+        <TechBadge {...tech} />
+      </li>
+    ))}
+  </ul>
+
+  <p class="exp__desc">{experience.description}</p>
+
+  <ul class="exp__tasks" role="list">
+    {experience.tasksList.map((task) => (
+      <li class="exp__task">{task}</li>
+    ))}
+  </ul>
+</article>
+
+<style>
+  .exp {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding-block: var(--space-2xl);
+    border-top: 1px solid var(--color-ink-rule);
+  }
+
+  .exp:last-child {
+    border-bottom: 1px solid var(--color-ink-rule);
+  }
+
+  .exp__num {
+    color: var(--color-paper-mute);
+  }
+
+  .exp__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .exp__title {
+    font-family: var(--font-body);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h3);
+    color: var(--color-paper);
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs);
+  }
+
+  .exp__company {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h2);
+    line-height: 1;
+    color: var(--color-paper);
+  }
+
+  .exp__sep {
+    color: var(--color-paper-mute);
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+
+  .exp__role {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+  }
+
+  .exp__dates {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-paper-mute);
+  }
+
+  .exp__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px var(--space-xs);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    color: var(--color-accent);
+    line-height: 1;
+    align-self: center;
+  }
+
+  .exp__dot {
+    color: var(--color-paper-mute);
+  }
+
+  .exp__location {
+    color: var(--color-paper-mute);
+  }
+
+  .exp__tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .exp__desc {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 70ch;
+  }
+
+  .exp__tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .exp__task {
+    position: relative;
+    padding-left: var(--space-md);
+    color: var(--color-paper-soft);
+    font-size: var(--fs-small);
+    line-height: var(--lh-loose);
+  }
+
+  .exp__task::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 900px) {
+    .exp {
+      grid-template-columns: 80px minmax(0, 1.2fr) minmax(0, 2fr);
+      gap: var(--space-xl);
+      padding-block: var(--space-3xl);
+    }
+
+    .exp__num {
+      grid-column: 1;
+    }
+
+    .exp__head,
+    .exp__tech {
+      grid-column: 2;
+    }
+
+    .exp__desc,
+    .exp__tasks {
+      grid-column: 3;
+    }
+  }
+</style>

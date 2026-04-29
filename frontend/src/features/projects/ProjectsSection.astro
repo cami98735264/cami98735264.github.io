@@ -1,0 +1,118 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+import ProjectCard from "./ProjectCard.tsx";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const id = toSlug(t.sections.projects.containerId);
+const list = t.sections.projects.list;
+---
+
+<section id={id} class="projects" aria-labelledby="projects-title">
+  <header class="projects__header">
+    <span class="eyebrow reveal" data-motion="fade">02 / Selected work</span>
+    <h2 id="projects-title" class="projects__title display reveal">
+      {t.sections.projects.title}
+    </h2>
+    <p class="projects__intro reveal" style="--reveal-delay: 120ms">
+      {t.sections.projects.description}
+    </p>
+    <div class="projects__count eyebrow reveal" data-motion="fade" style="--reveal-delay: 200ms">
+      <span class="projects__count-num">{list.length}</span>
+      <span>{t.sections.projects.count.description}</span>
+    </div>
+  </header>
+
+  <div class="projects__list">
+    {list.map((p, i) => (
+      <ProjectCard
+        client:visible
+        index={i}
+        title={p.title}
+        description={p.description}
+        projectId={p.id}
+        image={p.backgroundUrl}
+        viewText={t.sections.projects.viewProject}
+        showMoreText={t.sections.projects.showMore}
+        showLessText={t.sections.projects.showLess}
+        locale={locale}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .projects {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .projects__header {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .projects__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .projects__intro {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 60ch;
+  }
+
+  .projects__count {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    color: var(--color-paper-mute);
+  }
+
+  .projects__count-num {
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--fs-h2);
+    line-height: 1;
+  }
+
+  .projects__list {
+    border-bottom: 1px solid var(--color-ink-rule);
+  }
+
+  @media (min-width: 900px) {
+    .projects__header {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-md) var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-4xl);
+    }
+    .projects__header .eyebrow {
+      grid-column: 1 / span 12;
+    }
+    .projects__title {
+      grid-column: 1 / span 8;
+    }
+    .projects__intro {
+      grid-column: 1 / span 6;
+    }
+    .projects__count {
+      grid-column: 9 / span 4;
+      justify-self: end;
+    }
+  }
+</style>

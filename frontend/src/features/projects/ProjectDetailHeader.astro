@@ -1,0 +1,210 @@
+---
+import TechBadge from "@features/technologies/TechBadge.astro";
+import GithubIcon from "@assets/icons/github.svg?url";
+import Globe from "@assets/icons/globe.svg?url";
+import type { Project } from "./project.types";
+
+interface Props {
+  project: Project & {
+    viewGithub: string;
+    viewOnline: string;
+  };
+}
+
+const { project } = Astro.props;
+const { viewGithub, viewOnline, githubUrl, onlineUrl, technologies } = project;
+
+type RepoLink = { href: string; label: string };
+const repoLinks: RepoLink[] = [];
+if (githubUrl?.frontend && githubUrl?.backend && githubUrl.frontend === githubUrl.backend) {
+  repoLinks.push({ href: githubUrl.frontend, label: `${viewGithub}` });
+} else {
+  if (githubUrl?.frontend) repoLinks.push({ href: githubUrl.frontend, label: `${viewGithub} (frontend)` });
+  if (githubUrl?.backend) repoLinks.push({ href: githubUrl.backend, label: `${viewGithub} (backend)` });
+}
+---
+
+<header class="ph">
+  <div class="ph__media" data-ph-media data-tone="unknown" aria-hidden="true">
+    <img
+      src={project.backgroundUrl}
+      alt=""
+      class="ph__media-img"
+      loading="eager"
+      decoding="async"
+      data-ph-media-img
+    />
+  </div>
+
+  <div class="ph__content">
+    <div class="ph__meta eyebrow">
+      <span>Project</span>
+      <span class="ph__meta-sep" aria-hidden="true">·</span>
+      <span>#{project.id.toString().padStart(2, "0")}</span>
+    </div>
+
+    <h1 class="ph__title display">{project.title}</h1>
+
+    <ul class="ph__tech" role="list">
+      {technologies.map((tech) => (
+        <li>
+          <TechBadge {...tech} />
+        </li>
+      ))}
+    </ul>
+
+    <p class="ph__desc">{project.description}</p>
+
+    <div class="ph__links">
+      {onlineUrl && (
+        <a href={onlineUrl} target="_blank" rel="noopener noreferrer" class="ph__link">
+          <img src={Globe} alt="" aria-hidden="true" />
+          <span>{viewOnline}</span>
+        </a>
+      )}
+      {repoLinks.map((link) => (
+        <a href={link.href} target="_blank" rel="noopener noreferrer" class="ph__link">
+          <img src={GithubIcon} alt="" aria-hidden="true" />
+          <span>{link.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<style>
+  .ph {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-3xl);
+    padding-inline: var(--space-md);
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .ph__media {
+    aspect-ratio: 16 / 10;
+    background: var(--ph-media-bg, var(--color-ink-soft));
+    border: 1px solid var(--color-ink-rule);
+    overflow: hidden;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .ph__media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .ph__content {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .ph__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-paper-mute);
+  }
+
+  .ph__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+    text-wrap: balance;
+  }
+
+  .ph__tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ph__desc {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 70ch;
+  }
+
+  .ph__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .ph__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    color: var(--color-paper);
+    background: transparent;
+    border: 1px solid var(--color-ink-rule);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-small);
+    text-decoration: none;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .ph__link:hover {
+    border-color: var(--color-paper);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .ph__link img {
+    width: 16px;
+    height: 16px;
+    filter: invert(0.95);
+    transition: filter var(--dur-fast) var(--ease-out);
+  }
+
+  .ph__link:hover img {
+    filter: invert(0);
+  }
+
+  @media (min-width: 900px) {
+    .ph {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--space-md);
+      row-gap: var(--space-xl);
+      padding-block: var(--space-5xl);
+    }
+    .ph__media {
+      grid-column: 1 / span 12;
+      aspect-ratio: 21 / 9;
+    }
+    .ph__content {
+      grid-column: 1 / span 8;
+    }
+  }
+</style>
+
+<script>
+  import { detectBackdropTone } from "@lib/image-tone";
+
+  const media = document.querySelector<HTMLElement>("[data-ph-media]");
+  const img = document.querySelector<HTMLImageElement>("[data-ph-media-img]");
+  if (media && img?.src) {
+    detectBackdropTone(img.src).then((tone) => {
+      if (!tone) return;
+      media.dataset.tone = tone;
+      if (tone === "light") {
+        media.style.setProperty("--ph-media-bg", "var(--color-paper)");
+      }
+    });
+  }
+</script>

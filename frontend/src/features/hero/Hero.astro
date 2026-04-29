@@ -1,0 +1,268 @@
+---
+import { Image } from "astro:assets";
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+import { social } from "@config/site";
+import Button from "@ui/Button.astro";
+import profilePicture from "@assets/images/profile_picture.jpg";
+import arrowRight from "@assets/icons/arrow-right.svg?url";
+import download from "@assets/icons/download.svg?url";
+import githubIcon from "@assets/icons/github.svg?url";
+import linkedinIcon from "@assets/icons/linkedin.svg?url";
+import whatsappIcon from "@assets/icons/whatsapp.svg?url";
+import gmailIcon from "@assets/icons/gmail.svg?url";
+import { splitHeroTitle } from "./hero.copy";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const aboutId = toSlug(t.sections.aboutMe.containerId);
+const contactId = toSlug(t.sections.contactMe.containerId);
+const { preface, name, role } = splitHeroTitle(t.sections.aboutMe.descriptionTitle);
+
+const whatsappUrl = `https://wa.me/${social.whatsappNumber}?text=${encodeURIComponent(t.sections.aboutMe.whatsappText)}`;
+const gmailUrl =
+  `https://mail.google.com/mail/u/0/?fs=1&to=${social.emailAddress}` +
+  `&body=${encodeURIComponent(t.sections.aboutMe.emailTextBody)}` +
+  `&su=${encodeURIComponent(t.sections.aboutMe.emailTextSubject)}&tf=cm`;
+
+const socialLinks = [
+  { href: social.github, icon: githubIcon, label: "GitHub" },
+  { href: social.linkedin, icon: linkedinIcon, label: "LinkedIn" },
+  { href: whatsappUrl, icon: whatsappIcon, label: "WhatsApp" },
+  { href: gmailUrl, icon: gmailIcon, label: "Email" },
+];
+---
+
+<section id={aboutId} class="hero" aria-labelledby="hero-title">
+  <div class="hero__grid">
+    <div class="hero__num eyebrow reveal" data-motion="fade">01 / Intro</div>
+
+    <h1 id="hero-title" class="hero__title reveal">
+      <span class="hero__preface">{preface}</span>
+      <em class="hero__name display">{name}</em>
+      <span class="hero__role display">{role}</span>
+    </h1>
+
+    <p class="hero__desc reveal" style="--reveal-delay: 120ms">
+      {t.sections.aboutMe.description}
+    </p>
+
+    <div class="hero__cta reveal" style="--reveal-delay: 200ms">
+      <Button variant="primary" size="md" href={`#${contactId}`}>
+        {t.sections.aboutMe.contactMe}
+        <img src={arrowRight} alt="" aria-hidden="true" />
+      </Button>
+      <Button
+        variant="secondary"
+        size="md"
+        href={t.sections.aboutMe.downloadCVUrl}
+        external
+      >
+        {t.sections.aboutMe.downloadCV}
+        <img src={download} alt="" aria-hidden="true" />
+      </Button>
+    </div>
+
+    <ul class="hero__social reveal" style="--reveal-delay: 280ms" role="list">
+      {socialLinks.map(({ href, icon, label }) => (
+        <li>
+          <a class="hero__social-link" href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+            <img src={icon} alt="" aria-hidden="true" />
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <figure class="hero__figure reveal" data-motion="fade" style="--reveal-delay: 100ms">
+      <Image
+        src={profilePicture}
+        width={520}
+        height={520}
+        loading="eager"
+        alt={`${name}, ${role}`}
+        class="hero__img"
+      />
+      <figcaption class="hero__caption eyebrow">
+        <span>{name}, {role}</span>
+        <span>{t.sections.aboutMe.locationLabel}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-3xl) var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .hero__num {
+    color: var(--color-paper-mute);
+  }
+
+  .hero__title {
+    font-family: var(--font-body);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+    text-wrap: balance;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .hero__preface {
+    color: var(--color-paper-mute);
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .hero__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-display);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .hero__role {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-accent);
+  }
+
+  .hero__desc {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 56ch;
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .hero__social {
+    display: flex;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .hero__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-ink-rule);
+    border-radius: var(--radius-pill);
+    color: var(--color-paper-soft);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .hero__social-link img {
+    width: 18px;
+    height: 18px;
+    filter: invert(0.9);
+  }
+
+  .hero__social-link:hover,
+  .hero__social-link:focus-visible {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .hero__figure {
+    position: relative;
+    margin: 0;
+  }
+
+  .hero__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 1px solid var(--color-ink-rule);
+    filter: grayscale(0.2) contrast(1.05);
+  }
+
+  .hero__caption {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-sm);
+    color: var(--color-paper-mute);
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      padding-block: var(--space-5xl) var(--space-6xl);
+    }
+
+    .hero__grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--space-md);
+      row-gap: var(--space-md);
+      align-items: start;
+    }
+
+    .hero__num,
+    .hero__title,
+    .hero__desc,
+    .hero__cta,
+    .hero__social {
+      grid-column: 1 / span 7;
+    }
+
+    .hero__title {
+      margin-block: var(--space-xs) var(--space-md);
+    }
+
+    .hero__desc {
+      grid-column: 1 / span 6;
+    }
+
+    .hero__figure {
+      grid-column: 9 / span 4;
+      grid-row: 2 / span 4;
+      align-self: start;
+    }
+
+    .hero__img {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .hero__title {
+      grid-column: 1 / span 8;
+    }
+  }
+</style>

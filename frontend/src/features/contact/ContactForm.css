@@ -1,0 +1,109 @@
+.cf {
+  display: grid;
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: 720px;
+}
+
+.cf__row {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.cf__row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.cf__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-paper-mute);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.cf__row.is-invalid .cf__label {
+  color: var(--color-danger);
+}
+
+.cf__error {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-danger);
+}
+
+.cf__input {
+  width: 100%;
+  padding: var(--space-sm) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-ink-rule);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.cf__input:focus {
+  outline: none;
+  border-bottom-color: var(--color-accent);
+}
+
+.cf__input[aria-invalid="true"] {
+  border-bottom-color: var(--color-danger);
+}
+
+.cf__input[aria-invalid="true"]:focus {
+  border-bottom-color: var(--color-danger);
+}
+
+.cf__textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: var(--font-body);
+  line-height: var(--lh-base);
+}
+
+.cf__submit {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+  padding: var(--space-md) var(--space-xl);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-normal);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    gap var(--dur-fast) var(--ease-out);
+}
+
+.cf__submit:hover,
+.cf__submit:focus-visible {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  gap: var(--space-sm);
+  transform: translateY(-1px);
+}
+
+.cf__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

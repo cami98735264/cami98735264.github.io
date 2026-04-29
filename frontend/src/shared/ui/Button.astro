@@ -1,0 +1,145 @@
+---
+type Variant = "primary" | "secondary" | "ghost";
+type Size = "sm" | "md" | "lg";
+
+interface Props {
+  variant?: Variant;
+  size?: Size;
+  href?: string;
+  external?: boolean;
+  type?: "button" | "submit" | "reset";
+  fullWidth?: boolean;
+  ariaLabel?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  external = false,
+  type = "button",
+  fullWidth = false,
+  ariaLabel,
+  id,
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const target = external ? "_blank" : undefined;
+const rel = external ? "noopener noreferrer" : undefined;
+---
+
+<Tag
+  id={id}
+  class:list={["btn", `btn--${variant}`, `btn--${size}`, fullWidth && "btn--full", className]}
+  href={href}
+  target={target}
+  rel={rel}
+  type={!href ? type : undefined}
+  aria-label={ariaLabel}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    --btn-bg: var(--color-accent);
+    --btn-fg: var(--color-accent-ink);
+    --btn-bg-hover: var(--color-paper);
+    --btn-fg-hover: var(--color-ink);
+    --btn-border: transparent;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    border: 1px solid var(--btn-border);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-normal);
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    background-color: var(--btn-bg-hover);
+    color: var(--btn-fg-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn--secondary {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-paper);
+    --btn-bg-hover: var(--color-paper);
+    --btn-fg-hover: var(--color-ink);
+    --btn-border: var(--color-ink-rule);
+  }
+
+  .btn--ghost {
+    --btn-bg: transparent;
+    --btn-fg: var(--color-paper-soft);
+    --btn-bg-hover: var(--color-ink-soft);
+    --btn-fg-hover: var(--color-paper);
+    --btn-border: transparent;
+  }
+
+  .btn--sm {
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--fs-caption);
+  }
+
+  .btn--lg {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--fs-body);
+  }
+
+  .btn--full {
+    width: 100%;
+  }
+
+  /* Force icons to be tonal — match the button's text color regardless
+     of the SVG's baked-in fill (e.g. download.svg is locked green).
+     `brightness(0)` collapses any color to pure black; `invert(1)` flips
+     to pure white. We pick whichever matches the current --btn-fg. */
+  .btn :global(svg),
+  .btn :global(img) {
+    width: 1em;
+    height: 1em;
+    /* default state assumes light fg on dark/transparent bg */
+    filter: brightness(0) invert(1);
+    transition: filter var(--dur-fast) var(--ease-out);
+  }
+
+  /* Primary has dark fg (ink) on accent bg → dark icon, always */
+  .btn--primary :global(svg),
+  .btn--primary :global(img) {
+    filter: brightness(0);
+  }
+
+  /* Secondary hover swaps to paper bg + ink fg → dark icon */
+  .btn--secondary:hover :global(svg),
+  .btn--secondary:focus-visible :global(svg),
+  .btn--secondary:hover :global(img),
+  .btn--secondary:focus-visible :global(img) {
+    filter: brightness(0);
+  }
+  /* Ghost variant stays light-on-dark, no swap needed */
+</style>

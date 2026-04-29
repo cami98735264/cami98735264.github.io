@@ -1,0 +1,82 @@
+/* Reveal-on-enter animations.
+   Strategy:
+   - Modern browsers (Chrome 115+, Edge): native scroll-driven via animation-timeline: view().
+   - Older browsers: IntersectionObserver flips .is-revealed (see reveal.ts).
+   - Reduced motion: zero animation, content visible immediately.
+*/
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes reveal-side {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ----------- Native scroll-driven (progressive enhancement) ----------- */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 60%;
+  }
+  .reveal[data-motion="fade"] {
+    animation-name: reveal-fade;
+  }
+  .reveal[data-motion="side"] {
+    animation-name: reveal-side;
+  }
+}
+
+/* ----------- IO fallback ----------- */
+@supports not (animation-timeline: view()) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity var(--dur-reveal) var(--ease-out),
+      transform var(--dur-reveal) var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal[data-motion="fade"] {
+    transform: none;
+  }
+  .reveal[data-motion="side"] {
+    transform: translateX(-24px);
+  }
+  .reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ----------- Reduced motion: kill everything ----------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal[data-motion="fade"],
+  .reveal[data-motion="side"] {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

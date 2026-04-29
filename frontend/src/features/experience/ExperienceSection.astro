@@ -1,0 +1,83 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+import ExperienceCard from "./ExperienceCard.astro";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const id = toSlug(t.sections.experience.containerId);
+---
+
+<section id={id} class="xp" aria-labelledby="xp-title">
+  <header class="xp__header">
+    <span class="eyebrow reveal" data-motion="fade">04 / Career</span>
+    <h2 id="xp-title" class="xp__title display reveal">
+      {t.sections.experience.title}
+    </h2>
+    <p class="xp__intro reveal" style="--reveal-delay: 120ms">
+      {t.sections.experience.description}
+    </p>
+  </header>
+
+  <div class="xp__list">
+    {t.sections.experience.experienceList.map((xp, i) => (
+      <ExperienceCard
+        experience={xp}
+        index={i}
+        currentLabel={t.sections.experience.currentLabel}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .xp {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .xp__header {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .xp__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .xp__intro {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 60ch;
+  }
+
+  @media (min-width: 900px) {
+    .xp__header {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-4xl);
+    }
+    .xp__header .eyebrow {
+      grid-column: 1 / span 12;
+    }
+    .xp__title {
+      grid-column: 1 / span 8;
+    }
+    .xp__intro {
+      grid-column: 1 / span 6;
+    }
+  }
+</style>

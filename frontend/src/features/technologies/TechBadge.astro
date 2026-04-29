@@ -1,0 +1,32 @@
+---
+interface Props {
+  name: string;
+  backgroundColor: string;
+  textColor: string;
+}
+
+const { name, backgroundColor, textColor } = Astro.props;
+---
+
+<span
+  class="tech-badge"
+  style={`--badge-bg: ${backgroundColor}; --badge-fg: ${textColor};`}
+>
+  {name}
+</span>
+
+<style>
+  .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2xs) var(--space-sm);
+    background-color: var(--badge-bg);
+    color: var(--badge-fg);
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-wide);
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+</style>

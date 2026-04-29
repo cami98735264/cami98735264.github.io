@@ -1,0 +1,208 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const id = toSlug(t.sections.education.containerId);
+const items = t.sections.education.list;
+---
+
+<section id={id} class="edu" aria-labelledby="edu-title">
+  <header class="edu__header">
+    <span class="eyebrow reveal" data-motion="fade">05 / Formation</span>
+    <h2 id="edu-title" class="edu__title display reveal">
+      {t.sections.education.title}
+    </h2>
+    <p class="edu__intro reveal" style="--reveal-delay: 120ms">
+      {t.sections.education.description}
+    </p>
+  </header>
+
+  <div class="edu__list">
+    {items.map((entry, i) => (
+      <article class="edu__item reveal">
+        <div class="edu__num eyebrow" aria-hidden="true">
+          {String(i + 1).padStart(2, "0")}
+        </div>
+
+        <header class="edu__head">
+          <h3 class="edu__heading">
+            <span class="edu__institution display">{entry.institution}</span>
+          </h3>
+          <p class="edu__meta eyebrow">
+            <span>{entry.studyType}</span>
+            <span aria-hidden="true">·</span>
+            <span>{entry.area}</span>
+          </p>
+          <p class="edu__dates eyebrow">
+            <time>{entry.startDate}</time>
+            <span aria-hidden="true">→</span>
+            <time>{entry.endDate}</time>
+          </p>
+        </header>
+
+        <div class="edu__body">
+          <p class="edu__courses-label eyebrow">{t.sections.education.coursesLabel}</p>
+          <ul class="edu__courses" role="list">
+            {entry.courses.map((course) => (
+              <li class="edu__course">{course}</li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .edu {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .edu__header {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .edu__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .edu__intro {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 60ch;
+  }
+
+  .edu__list {
+    display: grid;
+    gap: 0;
+  }
+
+  .edu__item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    padding-block: var(--space-2xl);
+    border-top: 1px solid var(--color-ink-rule);
+  }
+
+  .edu__item:last-child {
+    border-bottom: 1px solid var(--color-ink-rule);
+  }
+
+  .edu__num {
+    color: var(--color-paper-mute);
+  }
+
+  .edu__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .edu__heading {
+    margin: 0;
+  }
+
+  .edu__institution {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
+    color: var(--color-paper);
+  }
+
+  .edu__meta,
+  .edu__dates {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--color-paper-mute);
+  }
+
+  .edu__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .edu__courses-label {
+    color: var(--color-paper-mute);
+  }
+
+  .edu__courses {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .edu__course {
+    position: relative;
+    padding-left: var(--space-md);
+    color: var(--color-paper-soft);
+    font-size: var(--fs-small);
+    line-height: var(--lh-loose);
+  }
+
+  .edu__course::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 900px) {
+    .edu__header {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-4xl);
+    }
+    .edu__header .eyebrow {
+      grid-column: 1 / span 12;
+    }
+    .edu__title {
+      grid-column: 1 / span 8;
+    }
+    .edu__intro {
+      grid-column: 1 / span 6;
+    }
+
+    .edu__item {
+      grid-template-columns: 80px minmax(0, 1.2fr) minmax(0, 2fr);
+      gap: var(--space-xl);
+      padding-block: var(--space-3xl);
+    }
+
+    .edu__num {
+      grid-column: 1;
+    }
+
+    .edu__head {
+      grid-column: 2;
+    }
+
+    .edu__body {
+      grid-column: 3;
+    }
+  }
+</style>

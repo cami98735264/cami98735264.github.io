@@ -3,12 +3,16 @@
     "projects": "Proyectos",
     "technologies": "Tecnologías",
     "experience": "Experiencia",
+    "education": "Educación",
+    "languages": "Idiomas",
     "contact": "Contactame"
   },
   "navbar": {
     "projects": "Proyectos",
     "technologies": "Tecnologías",
     "experience": "Experiencia",
+    "education": "Educación",
+    "languages": "Idiomas",
     "languageInput": {
       "options": {
         "en": "Inglés",
@@ -29,7 +33,8 @@
       "emailTextBody": "Hola! Me gustaría saber más sobre tus servicios! 🚀",
       "emailTextSubject": "Hola Cristián! 🚀",
       "descriptionTitle": "Soy Cristián, Desarrollador Full Stack",
-      "description": "Soy un desarrollador Full Stack especializado en backend y con amplios conocimientos en JavaScript, ReactJS y ExpressJS. Destaco en programación avanzada, gestión de bases de datos y diseño de experiencia de usuario (UI/UX).",
+      "description": "Desarrollador Full Stack con 2 años entregando plataformas en producción de extremo a extremo en TypeScript/React/Next.js + Node.js, además de servicios en Python/Django y herramientas administrativas en Laravel. Especializado en integraciones de terceros, flujos multi-LLM y sistemas de testing en CI, con foco en confiabilidad en producción, observabilidad y arquitectura escalable.",
+      "locationLabel": "Colombia · Remoto · GMT-5",
       "contactMe": "Contáctame",
       "downloadCV": "Descargar CV",
       "downloadCVUrl": "https://github.com/cami98735264/cami98735264/raw/refs/heads/main/CRISTIAN%20CAMILO%20RODRIGUEZ%20FULL%20STACK%20CV%20ESPAÑOL.pdf"
@@ -39,17 +44,23 @@
       "title": "Contáctame",
       "description": "Si deseas contactarme para colaborar en un proyecto o simplemente saludar, no dudes en enviarme un mensaje a través de mi correo electrónico o mis redes sociales.",
       "form": {
-        "name": "Sujeto",
+        "name": "Asunto",
         "email": "Correo electrónico",
         "message": "Mensaje",
-        "send": "Enviar"
+        "send": "Enviar mensaje",
+        "errors": {
+          "required": "Requerido",
+          "invalidEmail": "Correo no válido"
+        }
       }
     },
     "projects": {
       "viewProject": "Ver proyecto",
       "viewGithub": "Ver en GitHub",
       "viewOnline": "Ver en línea",
-      "projectsNotes": "Notas de proyecto y características",
+      "projectsNotes": "Notas del proyecto",
+      "showMore": "Leer más",
+      "showLess": "Leer menos",
       "list": [
         {
           "id": 1,
@@ -657,7 +668,12 @@
         "backend": "Desarrollo Backend",
         "databases": "Bases de datos",
         "designTools": "Herramientas de diseño",
-        "deployment": "Despliegue"
+        "deployment": "Despliegue",
+        "aiMl": "IA / ML",
+        "integrations": "Integraciones",
+        "testing": "Testing y QA",
+        "observability": "Observabilidad",
+        "architecture": "Arquitectura y proceso"
       },
       "title": "Lista de tecnologías",
       "description": "En esta sección, se recopilarán las tecnologías que he utillizado en mi trayectoría y de las cuales tengo un grado de proficiencia para cada una de ellas."
@@ -665,10 +681,43 @@
     "experience": {
       "experienceList": [
         {
+          "company": "Swapps",
+          "position": "Desarrollador Full Stack",
+          "location": "Colombia · Remoto",
+          "current": true,
+          "startDate": "Junio 2025",
+          "endDate": "Presente",
+          "description": "Entrega de plataformas greenfield y trabajo de confiabilidad para productos de clientes — abarcando React/Next.js + Node.js, Python/Django, herramientas administrativas en Laravel, flujos impulsados por IA e infraestructura de testing en CI.",
+          "tasksList": [
+            "Entregué 4+ plataformas greenfield para clientes de extremo a extremo en TypeScript / React / Next.js y Node.js.",
+            "Reimplementé el landing de donaciones de Dejusticia y resolví regresiones críticas de pagos en producción.",
+            "Optimicé la confiabilidad del chat sobre Cloudflare Workers — reduciendo el lookup de >10s a ~0.5ms usando Cloudflare KV.",
+            "Construí un pipeline de CI/CD con Cypress + Percy, entornos de preview con Argo CD y checks automatizados en GitHub Actions.",
+            "Desarrollé flujos en n8n impulsados por IA, integrando Front para clasificación y enrutamiento automático de tickets.",
+            "Construí sistemas multi-agente en Agno, incluyendo un agente PM y un agente Prompt Builder.",
+            "Creé herramientas administrativas en Laravel y manejé migraciones de sitios manteniendo el SEO."
+          ],
+          "technologiesList": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "React", "backgroundColor": "#61DAFB", "textColor": "#000000" },
+            { "name": "Next.js", "backgroundColor": "#000000", "textColor": "#FFFFFF" },
+            { "name": "Node.js", "backgroundColor": "#68A063", "textColor": "#FFFFFF" },
+            { "name": "Django", "backgroundColor": "#0C4B33", "textColor": "#FFFFFF" },
+            { "name": "Laravel", "backgroundColor": "#FF2D20", "textColor": "#FFFFFF" },
+            { "name": "Cloudflare Workers", "backgroundColor": "#F38020", "textColor": "#FFFFFF" },
+            { "name": "Cypress", "backgroundColor": "#17202C", "textColor": "#FFFFFF" },
+            { "name": "Percy", "backgroundColor": "#9E66BF", "textColor": "#FFFFFF" },
+            { "name": "Argo CD", "backgroundColor": "#EF7B4D", "textColor": "#FFFFFF" },
+            { "name": "n8n", "backgroundColor": "#EA4B71", "textColor": "#FFFFFF" },
+            { "name": "Agno", "backgroundColor": "#1F2937", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
           "company": "PayBluem",
           "position": "Desarrollador Full Stack",
+          "location": "Espinal, Tolima · Colombia",
           "startDate": "Mayo 2024",
-          "endDate": "Diciembre 2024",
+          "endDate": "Septiembre 2024",
           "description": "Una plataforma deportiva desarrollada en ReactJS y ExpressJS, que ofrece una solución integral para torneos deportivos.",
           "tasksList": [
             "Desarrollo de una plataforma full-stack con gestión de roles, enrutamiento y autenticación en ReactJS y ExpressJS.",
@@ -707,6 +756,7 @@
         {
           "company": "PayBluem",
           "position": "Desarrollador Full Stack",
+          "location": "Espinal, Tolima · Colombia",
           "startDate": "Enero 2024",
           "endDate": "Abril 2024",
           "description": "Plataforma y software para el reconocimiento de matrículas de vehículos utilizando inteligencia artificial.",
@@ -755,6 +805,7 @@
         {
           "company": "PayBluem",
           "position": "Desarrollador Full Stack",
+          "location": "Espinal, Tolima · Colombia",
           "startDate": "Julio 2023",
           "endDate": "Diciembre 2023",
           "description": "Plataforma para la interpretación de Lengua de Señas Colombiana utilizando inteligencia artificial con GPT-4 y la API de OpenAI.",
@@ -794,7 +845,46 @@
       ],
       "containerId": "Experiencia",
       "title": "Experiencia laboral",
-      "description": "Con una trayectoria de +1 año de experiencia, he diseñado sistemas de información en diferentes ámbitos empresariales, certificando mi conocimiento en creación y despliegue de aplicaciones full stack."
+      "description": "Más de 2 años entregando plataformas en producción de extremo a extremo en TypeScript/React/Next.js, Node.js, Python/Django y Laravel — con foco en integraciones de terceros, flujos multi-LLM y testing en CI.",
+      "currentLabel": "Actual"
+    },
+    "education": {
+      "containerId": "Educación",
+      "title": "Educación",
+      "description": "Formación académica que respalda el camino autodidacta que empecé años antes.",
+      "coursesLabel": "Asignaturas",
+      "list": [
+        {
+          "institution": "Instituto Tolimense de Formación Técnica Profesional (ITFIP)",
+          "area": "Programación Web",
+          "studyType": "Técnico",
+          "startDate": "Enero 2024",
+          "endDate": "Enero 2025",
+          "courses": [
+            "Desarrollo web full-stack",
+            "Bases de datos (SQL / NoSQL)",
+            "Fundamentos de ingeniería de software",
+            "Control de versiones"
+          ]
+        }
+      ]
+    },
+    "languages": {
+      "containerId": "Idiomas",
+      "title": "Idiomas",
+      "description": "Idiomas en los que trabajo, entrego y me comunico día a día.",
+      "list": [
+        {
+          "language": "Español",
+          "fluency": "Nativo",
+          "level": "C2"
+        },
+        {
+          "language": "Inglés",
+          "fluency": "Intermedio Alto",
+          "level": "B2"
+        }
+      ]
     }
   }
 }

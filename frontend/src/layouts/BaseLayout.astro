@@ -1,0 +1,78 @@
+---
+import { getLocale, getAllLocaleUrls, locales } from "astro-i18n-aut";
+import { defaultSEO } from "@config/seo";
+import "@styles/global.css";
+import "@motion/motion.css";
+import Grain from "@ui/Grain.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const {
+  title = defaultSEO.title,
+  description = defaultSEO.description,
+  image = defaultSEO.image,
+  canonical,
+} = Astro.props;
+
+const locale = getLocale(Astro.url);
+const localeUrls = getAllLocaleUrls(Astro.url);
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "";
+const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
+const ogImageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0B0B0F" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={locales[locale]} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {Object.entries(localeUrls).map(([loc, path]) => (
+      <link rel="alternate" hreflang={locales[loc]} href={`${siteUrl}${path}`} />
+    ))}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={`${siteUrl}${localeUrls[Object.keys(localeUrls)[0]]}`}
+    />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <Grain />
+    <slot />
+  </body>
+</html>
+
+<script>
+  import { initReveal } from "@motion/reveal";
+  initReveal();
+</script>

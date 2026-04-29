@@ -1,0 +1,114 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+import TechGroup from "./TechGroup.astro";
+import { techCategories, totalTechnologyCount } from "./tech.config";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const id = toSlug(t.sections.technologies.containerId);
+---
+
+<section id={id} class="techs" aria-labelledby="techs-title">
+  <header class="techs__header">
+    <span class="eyebrow reveal" data-motion="fade">03 / Stack</span>
+    <h2 id="techs-title" class="techs__title display reveal">
+      {t.sections.technologies.title}
+    </h2>
+    <p class="techs__intro reveal" style="--reveal-delay: 120ms">
+      {t.sections.technologies.description}
+    </p>
+    <div class="techs__count eyebrow reveal" data-motion="fade" style="--reveal-delay: 200ms">
+      <span class="techs__count-num">{totalTechnologyCount}</span>
+      <span>{t.sections.technologies.count.description}</span>
+    </div>
+  </header>
+
+  <div class="techs__groups reveal" data-motion="fade" style="--reveal-delay: 280ms">
+    {techCategories.map((cat) => (
+      <TechGroup
+        title={t.sections.technologies.categories[cat.key]}
+        technologies={cat.technologies}
+        mode={cat.mode}
+        localeIcon={cat.localIcon}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .techs {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .techs__header {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .techs__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .techs__intro {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 60ch;
+  }
+
+  .techs__count {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    color: var(--color-paper-mute);
+  }
+
+  .techs__count-num {
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--fs-h2);
+    line-height: 1;
+  }
+
+  .techs__groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 900px) {
+    .techs__header {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-md) var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-4xl);
+    }
+    .techs__header .eyebrow {
+      grid-column: 1 / span 12;
+    }
+    .techs__title {
+      grid-column: 1 / span 8;
+    }
+    .techs__intro {
+      grid-column: 1 / span 6;
+    }
+    .techs__count {
+      grid-column: 9 / span 4;
+      justify-self: end;
+    }
+  }
+</style>

@@ -1,0 +1,168 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadTranslations } from "@i18n/index";
+import { toSlug } from "@lib/strings";
+
+const locale = getLocale(Astro.url);
+const t = await loadTranslations(locale);
+const id = toSlug(t.sections.languages.containerId);
+const items = t.sections.languages.list;
+---
+
+<section id={id} class="lang" aria-labelledby="lang-title">
+  <header class="lang__header">
+    <span class="eyebrow reveal" data-motion="fade">06 / Tongues</span>
+    <h2 id="lang-title" class="lang__title display reveal">
+      {t.sections.languages.title}
+    </h2>
+    <p class="lang__intro reveal" style="--reveal-delay: 120ms">
+      {t.sections.languages.description}
+    </p>
+  </header>
+
+  <ul class="lang__list reveal" role="list" data-motion="fade" style="--reveal-delay: 200ms">
+    {items.map((item, i) => (
+      <li class="lang__item">
+        <span class="lang__num eyebrow" aria-hidden="true">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        <span class="lang__name display">{item.language}</span>
+        <span class="lang__sep" aria-hidden="true">/</span>
+        <span class="lang__fluency">{item.fluency}</span>
+        {item.level && (
+          <span class="lang__level eyebrow">{item.level}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .lang {
+    width: 100%;
+    max-width: var(--container-full);
+    margin-inline: auto;
+    padding-block: var(--space-5xl);
+    padding-inline: var(--space-md);
+  }
+
+  .lang__header {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .lang__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-paper);
+  }
+
+  .lang__intro {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    line-height: var(--lh-loose);
+    max-width: 60ch;
+  }
+
+  .lang__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .lang__item {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: baseline;
+    gap: var(--space-sm) var(--space-md);
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--color-ink-rule);
+  }
+
+  .lang__item:last-child {
+    border-bottom: 1px solid var(--color-ink-rule);
+  }
+
+  .lang__num {
+    color: var(--color-paper-mute);
+  }
+
+  .lang__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
+    color: var(--color-paper);
+  }
+
+  .lang__sep {
+    display: none;
+    color: var(--color-paper-mute);
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+
+  .lang__fluency {
+    color: var(--color-paper-soft);
+    font-size: var(--fs-body);
+    grid-column: 2 / -1;
+  }
+
+  .lang__level {
+    grid-column: 4;
+    grid-row: 1;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 2px var(--space-xs);
+    line-height: 1;
+    align-self: center;
+    justify-self: end;
+  }
+
+  @media (min-width: 900px) {
+    .lang__header {
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-md);
+      align-items: end;
+      margin-bottom: var(--space-4xl);
+    }
+    .lang__header .eyebrow {
+      grid-column: 1 / span 12;
+    }
+    .lang__title {
+      grid-column: 1 / span 8;
+    }
+    .lang__intro {
+      grid-column: 1 / span 6;
+    }
+
+    .lang__item {
+      grid-template-columns: 80px auto auto 1fr auto;
+      gap: var(--space-xl);
+      align-items: baseline;
+      padding-block: var(--space-2xl);
+    }
+
+    .lang__sep {
+      display: inline;
+    }
+
+    .lang__fluency {
+      grid-column: 4;
+      justify-self: start;
+    }
+
+    .lang__level {
+      grid-column: 5;
+    }
+  }
+</style>
