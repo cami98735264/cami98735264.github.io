@@ -67,8 +67,6 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
   :global(:root) {
     --nav-height: 4rem;
     --nav-bottom: 4rem;
-    --app-vw: 100vw;
-    --app-vh: 100dvh;
   }
 
   .nav {
@@ -85,7 +83,22 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-ink-rule);
     min-width: 0;
-    width: min(100%, var(--app-vw));
+    width: 100%;
+  }
+
+  /* Scroll-locking the page sets `position: fixed` on <body>, which
+     detaches `position: sticky` ancestors. Without this, the nav
+     (which contains the menu toggle that morphs into the close X)
+     drops back to its in-document position and can scroll out of
+     view — making the X "disappear", or briefly double up while the
+     mobile URL bar collapses and sticky tries to recompute. Pinning
+     the nav explicitly while the menu is open keeps the X anchored
+     to the top of the visible area. */
+  :global(html[data-nav-open]) .nav {
+    position: fixed;
+    top: 0;
+    left: var(--space-md);
+    right: var(--space-md);
   }
 
   .nav__brand {
@@ -197,14 +210,19 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
 
   .nav__mobile {
     position: fixed;
-    inset: 0;
+    /* Pin to the visual viewport (set by the script below) so the
+       overlay tracks the visible area exactly as the mobile URL/
+       search bar shows, hides, or animates between the two. The
+       dvh/dvw fallback covers the brief moment before JS runs and
+       any engine without visualViewport — both `100dvh` and
+       `100dvw` already adjust to dynamic browser chrome. */
+    top: var(--vv-y, 0px);
+    left: var(--vv-x, 0px);
+    width: var(--vv-w, 100dvw);
+    height: var(--vv-h, 100dvh);
     z-index: calc(var(--z-nav) - 1);
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: none;
-    min-height: 0;
-    height: var(--app-vh);
     padding: var(--space-md);
     padding-top: calc(var(--nav-bottom) + var(--space-md));
     padding-bottom: max(var(--space-md), env(safe-area-inset-bottom, 0px));
@@ -321,10 +339,12 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
 
   const setViewportVars = () => {
     const vv = window.visualViewport;
-    const width = vv?.width ?? window.innerWidth;
-    const height = vv?.height ?? window.innerHeight;
-    document.documentElement.style.setProperty("--app-vw", `${Math.round(width)}px`);
-    document.documentElement.style.setProperty("--app-vh", `${Math.round(height)}px`);
+    if (!vv) return;
+    const root = document.documentElement;
+    root.style.setProperty("--vv-x", `${vv.offsetLeft}px`);
+    root.style.setProperty("--vv-y", `${vv.offsetTop}px`);
+    root.style.setProperty("--vv-w", `${vv.width}px`);
+    root.style.setProperty("--vv-h", `${vv.height}px`);
   };
 
   const setNavHeight = () => {
