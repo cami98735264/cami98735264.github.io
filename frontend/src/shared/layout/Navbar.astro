@@ -195,11 +195,8 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     transition: transform var(--dur-fast) var(--ease-out);
   }
 
-  .nav__menu-toggle[aria-expanded="true"] span:first-child {
-    transform: translateY(2.5px) rotate(45deg);
-  }
-  .nav__menu-toggle[aria-expanded="true"] span:last-child {
-    transform: translateY(-2.5px) rotate(-45deg);
+  .nav__menu-toggle[aria-expanded="true"] {
+    border-color: var(--color-paper-soft);
   }
 
   .nav__mobile {
