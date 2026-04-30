@@ -64,6 +64,12 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
 </nav>
 
 <style>
+  :global(:root) {
+    --nav-height: 4rem;
+    --app-vw: 100vw;
+    --app-vh: 100dvh;
+  }
+
   .nav {
     position: sticky;
     top: 0;
@@ -77,6 +83,8 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-ink-rule);
+    min-width: 0;
+    width: min(100%, var(--app-vw));
   }
 
   .nav__brand {
@@ -85,6 +93,8 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     gap: var(--space-xs);
     color: var(--color-paper);
     text-decoration: none;
+    min-width: 0;
+    flex: 1 1 auto;
   }
 
   .nav__brand-mark {
@@ -100,6 +110,9 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     font-size: var(--fs-h3);
     line-height: 1;
     letter-spacing: var(--tracking-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .nav__brand-role {
@@ -139,6 +152,7 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     display: inline-flex;
     align-items: center;
     gap: var(--space-md);
+    flex-shrink: 0;
   }
 
   .nav__menu-toggle {
@@ -177,17 +191,27 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
 
   .nav__mobile {
     position: fixed;
-    /* sit below the sticky navbar, fill the rest of viewport edge-to-edge */
-    inset: 4rem 0 0 0;
+    top: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: calc(var(--z-nav) - 1);
     display: flex;
     flex-direction: column;
+    width: min(100%, var(--app-vw));
+    max-width: 100%;
+    min-height: 0;
+    height: calc(var(--app-vh) - var(--nav-height) - env(safe-area-inset-top, 0px));
     padding: var(--space-md);
+    padding-bottom: max(var(--space-md), env(safe-area-inset-bottom, 0px));
     background-color: rgba(11, 11, 15, 0.96);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     opacity: 0;
     pointer-events: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     transition: opacity var(--dur-base) var(--ease-out);
   }
 
@@ -202,6 +226,8 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     margin: 0;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-width: 0;
   }
 
   .nav__mobile-item {
@@ -220,6 +246,8 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     color: var(--color-paper);
     text-decoration: none;
     transition: color var(--dur-fast) var(--ease-out);
+    width: 100%;
+    min-width: 0;
   }
 
   .nav__mobile-link:hover,
@@ -237,12 +265,32 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
   }
 
   .nav__mobile-label {
+    min-width: 0;
     font-family: var(--font-display);
     font-style: italic;
     font-weight: var(--fw-regular);
     font-size: var(--fs-h1);
     line-height: var(--lh-tight);
     letter-spacing: var(--tracking-tight);
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 460px) {
+    .nav {
+      padding-inline: var(--space-md);
+    }
+
+    .nav__brand-name {
+      font-size: clamp(1.1rem, 4.8vw, var(--fs-h3));
+    }
+
+    .nav__right {
+      gap: var(--space-xs);
+    }
+
+    .nav__mobile-label {
+      font-size: clamp(1.8rem, 9vw, var(--fs-h1));
+    }
   }
 
   @media (min-width: 900px) {
@@ -264,6 +312,34 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
 <script>
   const toggle = document.getElementById("nav-menu-toggle");
   const menu = document.getElementById("mobile-menu");
+
+  const setViewportVars = () => {
+    const vv = window.visualViewport;
+    const width = vv?.width ?? window.innerWidth;
+    const height = vv?.height ?? window.innerHeight;
+    document.documentElement.style.setProperty("--app-vw", `${Math.round(width)}px`);
+    document.documentElement.style.setProperty("--app-vh", `${Math.round(height)}px`);
+  };
+
+  const setNavHeight = () => {
+    const nav = document.querySelector<HTMLElement>(".nav");
+    if (!nav) return;
+    const { height } = nav.getBoundingClientRect();
+    document.documentElement.style.setProperty("--nav-height", `${Math.ceil(height)}px`);
+  };
+
+  setViewportVars();
+  setNavHeight();
+  window.visualViewport?.addEventListener("resize", setViewportVars, { passive: true });
+  window.visualViewport?.addEventListener("scroll", setViewportVars, { passive: true });
+  window.addEventListener("resize", setViewportVars, { passive: true });
+  window.addEventListener("orientationchange", setViewportVars);
+  window.addEventListener("resize", setNavHeight, { passive: true });
+  window.addEventListener("orientationchange", setNavHeight);
+  document.addEventListener("astro:page-load", setViewportVars);
+  document.addEventListener("astro:after-swap", setViewportVars);
+  document.addEventListener("astro:page-load", setNavHeight);
+  document.addEventListener("astro:after-swap", setNavHeight);
 
   if (toggle && menu) {
     const close = () => {
