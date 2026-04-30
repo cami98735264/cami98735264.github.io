@@ -137,7 +137,9 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
   .nav__links {
     display: none;
     align-items: center;
-    gap: var(--space-xl);
+    /* Fluid gap so the link row decompresses smoothly between the
+       900px desktop activation and ~1700px+ where it caps at xl. */
+    gap: clamp(var(--space-md), 1.6vw, var(--space-xl));
     counter-reset: link;
   }
 
@@ -158,6 +160,16 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     letter-spacing: var(--tracking-wide);
   }
 
+  /* In the 900-1099 narrow-desktop zone the counter prefix
+     ("01 · ") on each link adds ~35px of visual density per link
+     and pushes the row back into the cramped feel the user
+     reported. Drop it until ~1100px, where there's room again. */
+  @media (max-width: 1099px) {
+    .nav__link::before {
+      content: none;
+    }
+  }
+
   .nav__link:hover {
     color: var(--color-paper);
   }
@@ -167,6 +179,12 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     align-items: center;
     gap: var(--space-md);
     flex-shrink: 0;
+    /* Past the cramped 900-1099 zone, add proportional separation
+       between the link cluster and the language/CTA group so they
+       read as distinct landmarks instead of adjacent items in the
+       same row. The brand's `flex: 1 1 auto` would otherwise hog
+       all leftover space and leave only the base gap (16px) here. */
+    margin-inline-start: clamp(0px, calc((100vw - 1100px) * 0.045), var(--space-2xl));
   }
 
   .nav__menu-toggle {
@@ -316,8 +334,15 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
   }
 
   @media (min-width: 900px) {
-    .nav__brand-role {
-      display: inline;
+    /* Once the link row turns on, align all three flex items to a
+       shared text baseline. Center alignment was making the lang
+       switcher (12px mono with extra padding) drift vertically
+       out of step with the nav links (14px body) — the glyphs of
+       both texts now rest on the same horizontal line. Mobile
+       keeps center alignment because the toggle button has no
+       text baseline. */
+    .nav {
+      align-items: baseline;
     }
     .nav__links {
       display: inline-flex;
@@ -327,6 +352,17 @@ function anchorFor(key: (typeof navbarLinks)[number]): string {
     }
     .nav__mobile {
       display: none !important;
+    }
+  }
+
+  /* Defer the long brand eyebrow ("F. S. Developer") until there's
+     real horizontal room for it. Below 1400px the row already
+     carries 5 nav-links and the language switcher; showing the
+     role here forces the brand-name into ellipsis truncation,
+     which reads as the navbar "shrinking" as the viewport narrows. */
+  @media (min-width: 1400px) {
+    .nav__brand-role {
+      display: inline;
     }
   }
 </style>

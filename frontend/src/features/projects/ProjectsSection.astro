@@ -49,7 +49,7 @@ const list = t.sections.projects.list;
     max-width: var(--container-full);
     margin-inline: auto;
     padding-block: var(--space-5xl);
-    padding-inline: var(--space-md);
+    padding-inline: var(--gutter);
   }
 
   .projects__header {
@@ -97,7 +97,7 @@ const list = t.sections.projects.list;
   @media (min-width: 900px) {
     .projects__header {
       grid-template-columns: repeat(12, 1fr);
-      gap: var(--space-md) var(--space-md);
+      gap: var(--space-md) var(--col-gap);
       align-items: end;
       margin-bottom: var(--space-4xl);
     }

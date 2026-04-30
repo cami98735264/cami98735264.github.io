@@ -57,7 +57,10 @@ const targets: Array<{ code: "es" | "en"; label: string }> = [
     display: none;
   }
 
-  @media (min-width: 900px) {
+  /* Match the navbar's brand-role threshold — below 1400px the row
+     is tight, so keep just the two-letter codes (ES / EN). Labels
+     come back once there's room for the full word. */
+  @media (min-width: 1400px) {
     .lang__label {
       display: inline;
       color: var(--color-paper-mute);

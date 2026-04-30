@@ -118,6 +118,18 @@
   --container-full: 1680px;
 
   /* ========================================
+     Fluid layout
+     One global lever for section gutters and grid column gaps.
+     Holds at --space-md on small viewports, then scales with the
+     viewport so the composition keeps proportional whitespace
+     between the 900px multi-col breakpoint and the 1680px cap —
+     the zone where typography clamps top out and the canvas
+     would otherwise feel edge-to-edge.
+     ======================================== */
+  --gutter: clamp(var(--space-md), 2vw, var(--space-3xl));
+  --col-gap: clamp(var(--space-md), 1.25vw, var(--space-xl));
+
+  /* ========================================
      Legacy aliases — keep until migration done
      Lets existing components render unchanged
      while we migrate file-by-file.
