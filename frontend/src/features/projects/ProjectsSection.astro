@@ -1,10 +1,10 @@
 ---
-import { getLocale } from "astro-i18n-aut";
+import { currentLocale, localeUrl } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import { toSlug } from "@lib/strings";
 import ProjectCard from "./ProjectCard.tsx";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
 const id = toSlug(t.sections.projects.containerId);
 const list = t.sections.projects.list;
@@ -32,12 +32,11 @@ const list = t.sections.projects.list;
         index={i}
         title={p.title}
         description={p.description}
-        projectId={p.id}
+        href={localeUrl(locale, `/projects/${p.id}/`)}
         image={p.backgroundUrl}
         viewText={t.sections.projects.viewProject}
         showMoreText={t.sections.projects.showMore}
         showLessText={t.sections.projects.showLess}
-        locale={locale}
       />
     ))}
   </div>

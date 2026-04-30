@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Navbar from "@layout/Navbar.astro";
+import Footer from "@layout/Footer.astro";
+import Hero from "@features/hero/Hero.astro";
+import ProjectsSection from "@features/projects/ProjectsSection.astro";
+import TechnologiesSection from "@features/technologies/TechnologiesSection.astro";
+import ExperienceSection from "@features/experience/ExperienceSection.astro";
+import EducationSection from "@features/education/EducationSection.astro";
+import LanguagesSection from "@features/languages/LanguagesSection.astro";
+import ContactSection from "@features/contact/ContactSection.astro";
+---
+
+<BaseLayout>
+  <Navbar />
+  <main>
+    <Hero />
+    <ProjectsSection />
+    <TechnologiesSection />
+    <ExperienceSection />
+    <EducationSection />
+    <LanguagesSection />
+    <ContactSection />
+  </main>
+  <Footer />
+</BaseLayout>

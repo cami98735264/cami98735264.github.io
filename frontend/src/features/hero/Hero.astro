@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { getLocale } from "astro-i18n-aut";
+import { currentLocale } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import { toSlug } from "@lib/strings";
 import { social } from "@config/site";
@@ -14,7 +14,7 @@ import whatsappIcon from "@assets/icons/whatsapp.svg?url";
 import gmailIcon from "@assets/icons/gmail.svg?url";
 import { splitHeroTitle } from "./hero.copy";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
 const aboutId = toSlug(t.sections.aboutMe.containerId);
 const contactId = toSlug(t.sections.contactMe.containerId);

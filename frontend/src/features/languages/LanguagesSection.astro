@@ -1,9 +1,9 @@
 ---
-import { getLocale } from "astro-i18n-aut";
+import { currentLocale } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import { toSlug } from "@lib/strings";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
 const id = toSlug(t.sections.languages.containerId);
 const items = t.sections.languages.list;

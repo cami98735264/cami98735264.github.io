@@ -1,23 +1,23 @@
 ---
-import { getLocale, getLocaleUrl } from "astro-i18n-aut";
+import { currentLocale, localeUrl } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import { navbarLinks } from "@config/site";
 import { isLandingPage } from "@lib/urls";
 import { toSlug } from "@lib/strings";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const translations = await loadTranslations(locale);
 const onLanding = isLandingPage(Astro.url);
 
 function anchorFor(key: (typeof navbarLinks)[number]): string {
   const slug = toSlug(translations.navbar[key]);
-  return onLanding ? `#${slug}` : getLocaleUrl(`/#${slug}`, locale);
+  return onLanding ? `#${slug}` : localeUrl(locale, `/#${slug}`);
 }
 ---
 
 <header class="nav" role="banner">
-  <a href={getLocaleUrl("/", locale)} class="nav__brand" aria-label="Homepage">
+  <a href={localeUrl(locale, "/")} class="nav__brand" aria-label="Homepage">
     <span class="nav__brand-mark" aria-hidden="true">○</span>
     <span class="nav__brand-name">Cristián R.</span>
     <span class="nav__brand-role eyebrow">F. S. Developer</span>

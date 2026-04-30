@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ShowMore } from "@re-dev/react-truncate";
-import { getLocaleUrl } from "astro-i18n-aut";
 import { detectBackdropTone } from "@lib/image-tone";
 import "./ProjectCard.css";
 
@@ -8,29 +7,26 @@ interface Props {
   index: number;
   title: string;
   description: string;
-  projectId: number;
+  href: string;
   image: string;
   viewText: string;
   showMoreText: string;
   showLessText: string;
-  locale: string;
 }
 
 export default function ProjectCard({
   index,
   title,
   description,
-  projectId,
+  href,
   image,
   viewText,
   showMoreText,
   showLessText,
-  locale,
 }: Props) {
   const cardRef = useRef<HTMLElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [mediaTone, setMediaTone] = useState<"light" | "dark" | null>(null);
-  const href = getLocaleUrl(`/projects/${projectId}/`, locale);
   const num = String(index + 1).padStart(2, "0");
 
   useEffect(() => {

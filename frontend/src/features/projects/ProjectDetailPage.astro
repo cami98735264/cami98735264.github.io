@@ -1,17 +1,17 @@
 ---
-import { getLocale } from "astro-i18n-aut";
+import { currentLocale } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import ProjectDetailHeader from "./ProjectDetailHeader.astro";
 import ProjectDetailBody from "./ProjectDetailBody.astro";
 import NotFound from "@features/not-found/NotFound.astro";
 import type { Project } from "./project.types";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
-const { projectId } = Astro.params;
+const { projectid } = Astro.params;
 
 const project = t.sections.projects.list.find(
-  (p: Project) => String(p.id) === String(projectId),
+  (p: Project) => String(p.id) === String(projectid),
 );
 ---
 

@@ -1,10 +1,10 @@
 ---
-import { getLocale, getLocaleUrl } from "astro-i18n-aut";
+import { currentLocale, localeUrl } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
-const homeUrl = getLocaleUrl("/", locale);
+const homeUrl = localeUrl(locale, "/");
 ---
 
 <section class="nf" aria-labelledby="nf-title">

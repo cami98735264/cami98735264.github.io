@@ -1,5 +1,5 @@
 ---
-import { getLocale, getAllLocaleUrls, locales } from "astro-i18n-aut";
+import { currentLocale, getAllLocaleUrls, localeTags } from "@i18n/locales";
 import { defaultSEO } from "@config/seo";
 import "@styles/global.css";
 import "@motion/motion.css";
@@ -19,8 +19,8 @@ const {
   canonical,
 } = Astro.props;
 
-const locale = getLocale(Astro.url);
-const localeUrls = getAllLocaleUrls(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
+const localeUrls = getAllLocaleUrls(Astro.url.pathname);
 const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const canonicalUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -47,20 +47,20 @@ const ogImageUrl = image.startsWith("http")
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:locale" content={locales[locale]} />
+    <meta property="og:locale" content={localeTags[locale]} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    {Object.entries(localeUrls).map(([loc, path]) => (
-      <link rel="alternate" hreflang={locales[loc]} href={`${siteUrl}${path}`} />
+    {(Object.entries(localeUrls) as Array<[keyof typeof localeTags, string]>).map(([loc, path]) => (
+      <link rel="alternate" hreflang={localeTags[loc]} href={`${siteUrl}${path}`} />
     ))}
     <link
       rel="alternate"
       hreflang="x-default"
-      href={`${siteUrl}${localeUrls[Object.keys(localeUrls)[0]]}`}
+      href={`${siteUrl}${localeUrls.es}`}
     />
 
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />

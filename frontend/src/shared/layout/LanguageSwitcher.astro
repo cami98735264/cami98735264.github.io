@@ -1,8 +1,8 @@
 ---
-import { getLocale, getLocaleUrl } from "astro-i18n-aut";
+import { currentLocale, switchUrl } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const translations = await loadTranslations(locale);
 const targets: Array<{ code: "es" | "en"; label: string }> = [
   { code: "es", label: translations.navbar.languageInput.options.es },
@@ -13,7 +13,7 @@ const targets: Array<{ code: "es" | "en"; label: string }> = [
 <div class="lang" role="group" aria-label="Language">
   {targets.map(({ code, label }) => (
     <a
-      href={getLocaleUrl(Astro.url, code)}
+      href={switchUrl(Astro.url.pathname, code)}
       class:list={["lang__opt", code === locale && "is-active"]}
       aria-current={code === locale ? "true" : undefined}
       hreflang={code}

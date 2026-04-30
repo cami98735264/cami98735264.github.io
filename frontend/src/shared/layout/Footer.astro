@@ -1,18 +1,18 @@
 ---
-import { getLocale, getLocaleUrl } from "astro-i18n-aut";
+import { currentLocale, localeUrl } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import { footerLinks, social, author } from "@config/site";
 import { isLandingPage } from "@lib/urls";
 import { toSlug } from "@lib/strings";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const translations = await loadTranslations(locale);
 const onLanding = isLandingPage(Astro.url);
 const year = new Date().getFullYear();
 
 function anchorFor(key: (typeof footerLinks)[number]): string {
   const slug = toSlug(translations.footer[key]);
-  return onLanding ? `#${slug}` : getLocaleUrl(`/#${slug}`, locale);
+  return onLanding ? `#${slug}` : localeUrl(locale, `/#${slug}`);
 }
 
 const socialLinks = [
@@ -73,7 +73,7 @@ const socialLinks = [
 
   .footer__brand {
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-sm);
     min-width: 0;
   }

@@ -1,11 +1,11 @@
 ---
-import { getLocale } from "astro-i18n-aut";
+import { currentLocale } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 import { toSlug } from "@lib/strings";
 import TechGroup from "./TechGroup.astro";
 import { techCategories, totalTechnologyCount } from "./tech.config";
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
 const id = toSlug(t.sections.technologies.containerId);
 ---

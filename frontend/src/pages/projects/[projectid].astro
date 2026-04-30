@@ -3,21 +3,17 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import Navbar from "@layout/Navbar.astro";
 import Footer from "@layout/Footer.astro";
 import ProjectDetailPage from "@features/projects/ProjectDetailPage.astro";
-import { getLocale } from "astro-i18n-aut";
+import { getProjectStaticPaths } from "@features/projects/static-paths";
+import { currentLocale } from "@i18n/locales";
 import { loadTranslations } from "@i18n/index";
 
-export async function getStaticPaths() {
-  const t = await loadTranslations("es");
-  return t.sections.projects.list.map((p) => ({
-    params: { projectId: String(p.id) },
-  }));
-}
+export const getStaticPaths = getProjectStaticPaths;
 
-const locale = getLocale(Astro.url);
+const locale = currentLocale(Astro.currentLocale);
 const t = await loadTranslations(locale);
-const { projectId } = Astro.params;
+const { projectid } = Astro.params;
 const project = t.sections.projects.list.find(
-  (p) => String(p.id) === String(projectId),
+  (p) => String(p.id) === String(projectid),
 );
 
 const title = project

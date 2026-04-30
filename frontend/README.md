@@ -9,7 +9,7 @@ A modern, responsive portfolio website built with Astro, React, and TypeScript. 
 - **Styling**: Styled Components
 - **Animations**: AOS (Animate On Scroll)
 - **Icons**: Iconify/Devicon
-- **Internationalization**: astro-i18n-aut
+- **Internationalization**: Astro built-in i18n
 - **Deployment**: Node.js
 
 ## 📁 Project Structure

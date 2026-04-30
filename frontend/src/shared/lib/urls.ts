@@ -1,4 +1,4 @@
-import { getLocale } from "astro-i18n-aut";
+import { localeFromPath } from "@i18n/locales";
 
 /**
  * Astro normalises this to "/" when no `base` is configured, or to
@@ -31,8 +31,8 @@ export function withBase(path: string): string {
  * (`/es/#proyectos`).
  */
 export function isLandingPage(url: URL): boolean {
-  const locale = getLocale(url);
   const pathname = stripBase(url.pathname);
+  const locale = localeFromPath(pathname);
   return (
     pathname === "/" ||
     pathname === `/${locale}` ||

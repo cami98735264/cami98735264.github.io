@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Navbar from "@layout/Navbar.astro";
+import Footer from "@layout/Footer.astro";
+import ProjectDetailPage from "@features/projects/ProjectDetailPage.astro";
+import { getProjectStaticPaths } from "@features/projects/static-paths";
+import { currentLocale } from "@i18n/locales";
+import { loadTranslations } from "@i18n/index";
+
+export const getStaticPaths = getProjectStaticPaths;
+
+const locale = currentLocale(Astro.currentLocale);
+const t = await loadTranslations(locale);
+const { projectid } = Astro.params;
+const project = t.sections.projects.list.find(
+  (p) => String(p.id) === String(projectid),
+);
+
+const title = project
+  ? `${project.title} — Cristián Rodríguez`
+  : `${t["404"].title} — Cristián Rodríguez`;
+const description = project ? project.description : t["404"].description;
+const image = project ? project.backgroundUrl : undefined;
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <Navbar />
+  <main>
+    <ProjectDetailPage />
+  </main>
+  <Footer />
+</BaseLayout>

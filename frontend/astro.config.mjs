@@ -1,43 +1,38 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
-import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import react from '@astrojs/react';
 
-const defaultLocale = "es";
-const locales = {
-  es: "es-ES",
-  en: "en-US",
-};
-
+/** @param {string} p */
 const r = (p) => fileURLToPath(new URL(p, import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    react(),
-    icon(),
-    i18n({
-      locales,
-      defaultLocale,
-      redirectDefaultLocale: true,
-    }),
-    sitemap({
-      i18n: {
-        locales,
-        defaultLocale,
-      },
-      filter: filterSitemapByDefaultLocale({ defaultLocale }),
-    }),
-  ],
   site: "https://cami98735264.github.io",
-  trailingSlash: "always",
+  trailingSlash: "ignore",
   build: {
     format: "directory",
   },
   output: "static",
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+  integrations: [
+    react(),
+    icon(),
+    sitemap({
+      i18n: {
+        defaultLocale: "es",
+        locales: { es: "es-ES", en: "en-US" },
+      },
+    }),
+  ],
   vite: {
     resolve: {
       alias: {
