@@ -66,6 +66,87 @@
       "showLess": "Read less",
       "list": [
         {
+          "id": 13,
+          "title": "Simplex Method MCP Server",
+          "description": "TypeScript MCP (Model Context Protocol) server that parses linear-programming problems from natural language input and returns a step-by-step XLSX file with the full simplex tableau. Exposes solver and parser tools to any MCP-compatible client (Claude Desktop, IDE agents) — signaling current AI-tooling fluency on the 2026 agent stack.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/simplex-method-mcp"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/simplex-method-mcp",
+          "screenshots": [],
+          "projectNotes": [
+            "Natural-Language to LP: The parser turns a plain-English description of an optimization problem into a structured linear program, eliminating the need for hand-formatting the standard-form tableau before solving.",
+            "Step-by-Step Audit Trail: Rather than returning only the optimum, the server emits a full XLSX with each pivot iteration, basis change and reduced-cost computation — usable both as a teaching tool and as a verifiable artifact for analyst review.",
+            "MCP-Native Design: Built against the Model Context Protocol, the server exposes solve and parse as discrete tools so any MCP-capable agent (Claude Desktop, IDE assistants) can chain them inside larger workflows."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "MCP", "backgroundColor": "#1F2937", "textColor": "#FFFFFF" },
+            { "name": "NodeJS", "backgroundColor": "#68A063", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Taekwondo Detection Platform",
+          "description": "Research platform combining a Django/Python backend with a TypeScript/React frontend for AI-assisted Taekwondo movement detection. Institutional research seminar work paired with a published academic poster — demonstrating end-to-end ownership across ML, backend and frontend.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/tkd-detection-platform-frontend"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/tkd-detection-platform-frontend",
+          "screenshots": [],
+          "projectNotes": [
+            "Vision-Model Integration: The platform feeds annotated training-session footage into a detection pipeline that flags key movement patterns, exposing the results through a React dashboard for coach review.",
+            "Academic Output: The work was presented as a research poster at the institutional seminar — a tangible artifact bridging applied AI engineering with formal academic validation.",
+            "Cross-Stack Architecture: Django + DRF on the backend cleanly separates the inference layer from the TypeScript frontend, letting either side iterate without breaking the API contract."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "React", "backgroundColor": "#61DAFB", "textColor": "#000000" },
+            { "name": "Django", "backgroundColor": "#0C4B33", "textColor": "#FFFFFF" },
+            { "name": "Python", "backgroundColor": "#3776AB", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
+          "id": 15,
+          "title": "NestJS Task Management API",
+          "description": "Production-grade RESTful API with JWT authentication, role-based access control, and full CRUD over PostgreSQL via TypeORM. Built as a backend technical challenge — demonstrating clean NestJS module boundaries, dependency injection, and request validation pipelines.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/prueba-tecnica-nestjs"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/prueba-tecnica-nestjs",
+          "screenshots": [],
+          "projectNotes": [
+            "Auth & RBAC: JWT issuance, refresh-aware guards and role decorators are wired through NestJS's DI system, so route-level access checks stay declarative and testable.",
+            "Persistence Layer: TypeORM entities map cleanly to PostgreSQL with migrations, giving the API a deterministic schema lifecycle suitable for production deployment.",
+            "Validation & DTOs: Class-validator pipes enforce contract integrity at the boundary, surfacing structured 400 errors before requests touch the service layer."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "NestJS", "backgroundColor": "#E0234E", "textColor": "#FFFFFF" },
+            { "name": "PostgreSQL", "backgroundColor": "#316192", "textColor": "#FFFFFF" },
+            { "name": "TypeORM", "backgroundColor": "#FE0902", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
+          "id": 16,
+          "title": "SWAPI React Native App",
+          "description": "Cross-platform mobile wrapper around the Star Wars API showcasing React Native + TypeScript and modern UI/UX patterns: themed lists, detail screens, optimistic loading and gesture-driven navigation. Built as a frontend technical challenge to demonstrate mobile competency alongside web work.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/swapi-app"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/swapi-app",
+          "screenshots": [],
+          "projectNotes": [
+            "Shared TS Domain: Types and API client are written once and consumed identically on iOS and Android, illustrating how a TypeScript core eliminates the dual-platform translation tax.",
+            "UI/UX Polish: The app emphasizes the small things — skeleton states, touch feedback, list virtualization — that separate a production-quality mobile build from a quick prototype.",
+            "Recruiter-Ready Sample: Built specifically to prove React Native + UI/UX skills end-to-end, useful as a self-contained sample for recruiters evaluating mobile fluency."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "React Native", "backgroundColor": "#61DAFB", "textColor": "#000000" }
+          ]
+        },
+        {
           "id": 1,
           "title": "Vehicle License Plate Detection and Monitoring Platform V2 (Improved and migrated to SvelteJS)",
           "description": "Platform and detection software that uses the YoloV8 artificial intelligence algorithm for license plate recognition. Implementation of functionalities to study and map behavior patterns based on the location of license plate records within the web platform using the SvelteJS framework",

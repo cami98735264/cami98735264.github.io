@@ -66,6 +66,87 @@
       "showLess": "Leer menos",
       "list": [
         {
+          "id": 13,
+          "title": "Servidor MCP del Método Simplex",
+          "description": "Servidor MCP (Model Context Protocol) en TypeScript que parsea problemas de programación lineal desde lenguaje natural y devuelve un archivo XLSX paso a paso con el tableau completo del simplex. Expone herramientas de solver y parser a cualquier cliente compatible con MCP (Claude Desktop, agentes de IDE) — demostrando fluidez actual en el stack de agentes de IA de 2026.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/simplex-method-mcp"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/simplex-method-mcp",
+          "screenshots": [],
+          "projectNotes": [
+            "De lenguaje natural a LP: El parser convierte una descripción en lenguaje plano de un problema de optimización en un programa lineal estructurado, eliminando la necesidad de formatear a mano el tableau en forma estándar antes de resolverlo.",
+            "Traza paso a paso auditable: En lugar de devolver sólo el óptimo, el servidor emite un XLSX con cada iteración de pivoteo, cambio de base y cálculo de costos reducidos — útil tanto como herramienta didáctica como artefacto verificable para revisión analítica.",
+            "Diseño MCP-nativo: Construido sobre el Model Context Protocol, expone solve y parse como herramientas discretas para que cualquier agente compatible (Claude Desktop, asistentes de IDE) las encadene dentro de flujos más amplios."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "MCP", "backgroundColor": "#1F2937", "textColor": "#FFFFFF" },
+            { "name": "NodeJS", "backgroundColor": "#68A063", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
+          "id": 14,
+          "title": "Plataforma de Detección de Taekwondo",
+          "description": "Plataforma de investigación que combina un backend en Django/Python con un frontend en TypeScript/React para la detección asistida por IA de movimientos de Taekwondo. Trabajo del semillero institucional acompañado de un póster académico publicado — evidenciando responsabilidad de extremo a extremo entre ML, backend y frontend.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/tkd-detection-platform-frontend"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/tkd-detection-platform-frontend",
+          "screenshots": [],
+          "projectNotes": [
+            "Integración del modelo de visión: La plataforma alimenta video anotado de sesiones de entrenamiento a un pipeline de detección que marca patrones clave de movimiento, exponiéndolos al entrenador a través de un dashboard en React.",
+            "Producto académico: El trabajo fue presentado como póster de investigación en el semillero institucional — un artefacto tangible que une la ingeniería aplicada de IA con la validación académica formal.",
+            "Arquitectura multi-stack: Django + DRF en el backend separa limpiamente la capa de inferencia del frontend en TypeScript, permitiendo que cada lado itere sin romper el contrato de la API."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "React", "backgroundColor": "#61DAFB", "textColor": "#000000" },
+            { "name": "Django", "backgroundColor": "#0C4B33", "textColor": "#FFFFFF" },
+            { "name": "Python", "backgroundColor": "#3776AB", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
+          "id": 15,
+          "title": "API de Gestión de Tareas en NestJS",
+          "description": "API RESTful de calidad productiva con autenticación JWT, control de acceso basado en roles y CRUD completo sobre PostgreSQL vía TypeORM. Desarrollada como prueba técnica de backend — demostrando límites de módulos limpios en NestJS, inyección de dependencias y pipelines de validación de requests.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/prueba-tecnica-nestjs"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/prueba-tecnica-nestjs",
+          "screenshots": [],
+          "projectNotes": [
+            "Autenticación y RBAC: La emisión de JWT, los guards conscientes del refresh y los decoradores de rol están cableados a través del sistema de DI de NestJS, manteniendo los chequeos de acceso por ruta declarativos y testeables.",
+            "Capa de persistencia: Las entidades de TypeORM mapean limpiamente a PostgreSQL con migraciones, dándole a la API un ciclo de vida de esquema determinístico apto para despliegue en producción.",
+            "Validación y DTOs: Los pipes de class-validator imponen integridad de contrato en el borde, levantando errores 400 estructurados antes de que las solicitudes lleguen a la capa de servicios."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "NestJS", "backgroundColor": "#E0234E", "textColor": "#FFFFFF" },
+            { "name": "PostgreSQL", "backgroundColor": "#316192", "textColor": "#FFFFFF" },
+            { "name": "TypeORM", "backgroundColor": "#FE0902", "textColor": "#FFFFFF" }
+          ]
+        },
+        {
+          "id": 16,
+          "title": "App SWAPI en React Native",
+          "description": "Wrapper móvil multiplataforma sobre la API de Star Wars que demuestra React Native + TypeScript y patrones modernos de UI/UX: listas tematizadas, pantallas de detalle, carga optimista y navegación por gestos. Construida como prueba técnica de frontend para demostrar competencia móvil junto al trabajo web.",
+          "githubUrl": {
+            "frontend": "https://github.com/cami98735264/swapi-app"
+          },
+          "backgroundUrl": "https://opengraph.githubassets.com/1/cami98735264/swapi-app",
+          "screenshots": [],
+          "projectNotes": [
+            "Dominio TS compartido: Los tipos y el cliente de la API se escriben una sola vez y se consumen idénticamente en iOS y Android, ilustrando cómo un core TypeScript elimina la sobrecarga de traducción dual.",
+            "Pulido de UI/UX: La app enfatiza los detalles — estados skeleton, feedback táctil, virtualización de listas — que separan una build móvil de calidad productiva de un prototipo rápido.",
+            "Muestra lista para reclutadores: Construida específicamente para demostrar React Native + UI/UX de extremo a extremo, útil como muestra autocontenida para reclutadores que evalúan fluidez móvil."
+          ],
+          "technologies": [
+            { "name": "TypeScript", "backgroundColor": "#3178C6", "textColor": "#FFFFFF" },
+            { "name": "React Native", "backgroundColor": "#61DAFB", "textColor": "#000000" }
+          ]
+        },
+        {
           "id": 1,
           "title": "Plataforma de seguimiento y monitoreo de placas vehículares detectadas V2 (Mejorada y migrada a SvelteJS)",
           "onlineUrl": "https://rescep.com.co",
