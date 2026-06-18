@@ -946,7 +946,20 @@
       "coursesLabel": "Coursework",
       "list": [
         {
-          "institution": "Instituto Tolimense de Formación Técnica Profesional (ITFIP)",
+          "institution": "Universidad del Espinal (UniEspinal)",
+          "area": "IT Management",
+          "studyType": "Technologist",
+          "startDate": "January 2025",
+          "endDate": "July 2026",
+          "courses": [
+            "Capstone: AI-assisted Taekwondo movement detection platform (Django + React + YOLOv8) — institutional seminar, published academic poster",
+            "Database design (relational modeling, normalization)",
+            "Systems analysis and design of information systems",
+            "Operations research — applied in the Simplex Method MCP Server project"
+          ]
+        },
+        {
+          "institution": "Universidad del Espinal (UniEspinal)",
           "area": "Web Programming",
           "studyType": "Technician",
           "startDate": "January 2024",

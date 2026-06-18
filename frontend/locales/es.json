@@ -942,7 +942,20 @@
       "coursesLabel": "Asignaturas",
       "list": [
         {
-          "institution": "Instituto Tolimense de Formación Técnica Profesional (ITFIP)",
+          "institution": "Universidad del Espinal (UniEspinal)",
+          "area": "Gestión Informática",
+          "studyType": "Tecnólogo",
+          "startDate": "Enero 2025",
+          "endDate": "Julio 2026",
+          "courses": [
+            "Proyecto de grado: plataforma de detección asistida por IA de movimientos de Taekwondo (Django + React + YOLOv8) — semillero institucional, póster académico publicado",
+            "Diseño de bases de datos (modelado relacional, normalización)",
+            "Análisis y diseño de sistemas de información",
+            "Investigación de operaciones — aplicada en el proyecto del servidor MCP del Método Simplex"
+          ]
+        },
+        {
+          "institution": "Universidad del Espinal (UniEspinal)",
           "area": "Programación Web",
           "studyType": "Técnico",
           "startDate": "Enero 2024",
