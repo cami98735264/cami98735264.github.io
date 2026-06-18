@@ -56,6 +56,7 @@ const socialLinks = [
       <Button
         variant="secondary"
         size="md"
+        id="download-cv-btn"
         href={t.sections.aboutMe.downloadCVUrl}
         external
       >
@@ -90,6 +91,33 @@ const socialLinks = [
     </figure>
   </div>
 </section>
+
+<script>
+  document.addEventListener("click", async (e) => {
+    const target = e.target as HTMLElement | null;
+    const btn = target?.closest("#download-cv-btn") as HTMLAnchorElement | null;
+    if (!btn) return;
+    const url = btn.getAttribute("href");
+    if (!url) return;
+    e.preventDefault();
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = objectUrl;
+      const lastSegment = url.split("/").pop() ?? "CV.pdf";
+      a.download = decodeURIComponent(lastSegment);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    } catch {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  });
+</script>
 
 <style>
   .hero {
